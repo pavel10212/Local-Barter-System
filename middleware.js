@@ -8,6 +8,8 @@ export default async function middleware(request) {
 
         const publicRoutes = ["/login", "/register", "/"];
 
+
+
         if (publicRoutes.includes(pathname)) {
             return NextResponse.next();
         }

@@ -4,6 +4,7 @@ import {useState} from "react";
 import {useRouter} from "next/navigation";
 import LoadingWrapper from "@/components/navbar/loadingwrapper/loadingwrapper";
 import {toast} from "sonner";
+import {getSession} from "next-auth/react";
 
 
 const RegisterPage = () => {
@@ -17,6 +18,11 @@ const RegisterPage = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState(null);
     const router = useRouter()
+    const {data: session} = getSession()
+
+    if (session) {
+        router.push("/homepage")
+    }
 
 
     const handleSubmit = async (e) => {
@@ -166,7 +172,8 @@ const RegisterPage = () => {
 
                 <p className="mt-10 text-center text-sm text-gray-400">
                     Already have an account?
-                    <a href="/login" className="font-semibold leading-6 text-indigo-400 hover:text-indigo-300"> Sign in</a>
+                    <a href="/login" className="font-semibold leading-6 text-indigo-400 hover:text-indigo-300"> Sign
+                        in</a>
                 </p>
             </div>
         </div>
