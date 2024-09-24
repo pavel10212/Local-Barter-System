@@ -34,13 +34,13 @@ const Navbar = () => {
             </div>
             <div className="flex space-x-4">
                 <Link
-                    href="/"
+                    href="/homepage"
                     className="text-white hover:text-gray-300 transition duration-300"
                 >
                     Homepage
                 </Link>
                 <Link
-                    href="/my-trades"
+                    href="/homepage/my-trades"
                     className="text-white hover:text-gray-300 transition duration-300"
                 >
                     My Trades
