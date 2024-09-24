@@ -1,0 +1,39 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  userId      String   @id @default(auto()) @map("_id") @db.ObjectId
+  email       String   @unique
+  password    String
+  firstName   String?
+  lastName    String?
+  address     String?
+  phoneNumber String?
+  items       Item[]
+  Barter      Barter[]
+}
+
+model Item {
+  itemId      String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String
+  image       String?
+  itemOwner   User     @relation(fields: [userId], references: [userId])
+  userId      String   @db.ObjectId
+  Barter      Barter[]
+}
+
+model Barter {
+  barterId    String @id @default(auto()) @map("_id") @db.ObjectId
+  itemOwner   User   @relation(fields: [userId], references: [userId])
+  userId      String @db.ObjectId
+  itemOffered Item   @relation(fields: [itemId], references: [itemId])
+  itemId      String @db.ObjectId
+  status      String
+}
