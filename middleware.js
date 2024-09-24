@@ -7,11 +7,6 @@ export default async function middleware(request) {
         const {pathname, origin} = request.nextUrl;
 
         const publicRoutes = ["/login", "/register", "/"];
-        const authRouters = ["/login", "/register"];
-
-        if (!session && authRouters.includes(pathname)) {
-            return NextResponse.redirect(`${origin}/homepage`);
-        }
 
         if (publicRoutes.includes(pathname)) {
             return NextResponse.next();
@@ -28,6 +23,7 @@ export default async function middleware(request) {
     }
 }
 
+
 export const config = {
-    matcher: ["/((?!api|_next/static|_next/image|favicon.ico|logo).*)"],
+    matcher: ["/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)"],
 }
