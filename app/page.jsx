@@ -1,21 +1,32 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image"; // Import the Image component from Next.js
 
 const LandingPage = () => {
   return (
-    <div className="min-h-screen flex flex-col bg-gray-900">
+    <div className="min-h-screen flex flex-col bg-black">
       <header className="w-full flex justify-between items-center p-4 bg-gray-800">
-        <div className="text-2xl font-bold text-white">Barter System</div>
+        <div className="flex items-center">
+          <Image
+            src="/barterlogo.png" // Replace with the path to your logo
+            alt="Barter System Logo"
+            width={50} // Adjust the width as needed
+            height={50} // Adjust the height as needed
+          />
+          <span className="text-2xl font-bold text-white ml-2">
+            Barter System
+          </span>
+        </div>
         <div>
           <Link
             href="/login"
-            className="bg-blue-500 text-white py-2 px-4 rounded-full hover:bg-blue-600 transition duration-300 mr-2"
+            className="bg-black text-white py-2 px-4 rounded-full hover:bg-white hover:text-black transition duration-300 mr-2"
           >
             Login
           </Link>
           <Link
-            href="/register"
-            className="bg-green-500 text-white py-2 px-4 rounded-full hover:bg-green-600 transition duration-300"
+            href="/signup"
+            className="bg-white text-black py-2 px-4 rounded-full hover:bg-black hover:text-white transition duration-300"
           >
             Sign Up
           </Link>
@@ -34,7 +45,7 @@ const LandingPage = () => {
           </p>
           <Link
             href="/login"
-            className="inline-block bg-blue-500 text-white py-3 px-6 rounded-full shadow-lg hover:bg-blue-600 transition duration-300"
+            className="inline-block bg-black text-white py-3 px-6 rounded-full hover:bg-white hover:text-black transition duration-300"
           >
             Get Started
           </Link>
