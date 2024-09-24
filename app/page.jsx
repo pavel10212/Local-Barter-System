@@ -4,7 +4,7 @@ import Image from "next/image"; // Import the Image component from Next.js
 
 const LandingPage = () => {
   return (
-    <div className="min-h-screen flex flex-col bg-black">
+    <div className="min-h-screen flex flex-col bg-gray-900">
       <header className="w-full flex justify-between items-center p-4 bg-gray-800">
         <div className="flex items-center">
           <Image
