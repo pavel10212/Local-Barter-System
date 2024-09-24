@@ -16,7 +16,7 @@ model User {
   address     String?
   phoneNumber String?
   items       Item[]
-  Barter      Barter[]
+  barters     Barter[]
 }
 
 model Item {
