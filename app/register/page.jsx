@@ -2,6 +2,8 @@
 
 import {useState} from "react";
 import {useRouter} from "next/navigation";
+import LoadingWrapper from "@/components/navbar/loadingwrapper/loadingwrapper";
+import {toast} from "sonner";
 
 
 const RegisterPage = () => {
@@ -51,7 +53,7 @@ const RegisterPage = () => {
                 throw new Error(data.message)
             }
 
-            
+            toast.success("Account created successfully")
             router.push("/login")
         } catch (error) {
             setError(error.message)
@@ -59,6 +61,9 @@ const RegisterPage = () => {
         setIsSubmitting(false)
     }
 
+    if (isSubmitting) {
+        return <LoadingWrapper/>
+    }
 
 
     return (
@@ -161,7 +166,7 @@ const RegisterPage = () => {
 
                 <p className="mt-10 text-center text-sm text-gray-400">
                     Already have an account?
-                    <a href="#" className="font-semibold leading-6 text-indigo-400 hover:text-indigo-300">Sign in</a>
+                    <a href="/login" className="font-semibold leading-6 text-indigo-400 hover:text-indigo-300"> Sign in</a>
                 </p>
             </div>
         </div>
