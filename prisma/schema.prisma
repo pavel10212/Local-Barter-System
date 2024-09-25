@@ -26,14 +26,15 @@ model Item {
   image       String?
   itemOwner   User     @relation(fields: [userId], references: [userId])
   userId      String   @db.ObjectId
-  Barter      Barter[]
+  barters     Barter[] @relation("ItemToBarter")
 }
 
 model Barter {
   barterId    String @id @default(auto()) @map("_id") @db.ObjectId
   itemOwner   User   @relation(fields: [userId], references: [userId])
   userId      String @db.ObjectId
-  itemOffered Item   @relation(fields: [itemId], references: [itemId])
+  itemOffered Item   @relation("ItemToBarter", fields: [itemId], references: [itemId], onDelete: Cascade)
   itemId      String @db.ObjectId
+  itemSeeking String
   status      String
 }
