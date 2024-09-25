@@ -97,7 +97,7 @@ const MyItems = () => {
               <CardContent>
                 <div className="h-48 bg-gray-600 flex items-center justify-center mb-4">
                   {item.image ? (
-                    <Image width={200} height={200}
+                    <Image width={400} height={400}
                      src={item.image} alt={item.name} className="h-full w-full object-cover" />
                   ) : (
                     <FaImage className="text-4xl text-gray-400" />
