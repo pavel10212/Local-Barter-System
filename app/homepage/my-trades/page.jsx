@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { FaExchangeAlt, FaUserCircle } from "react-icons/fa";
+import Image from "next/image";
 
 const MyTrades = () => {
   const [selectedTrade, setSelectedTrade] = useState(null);
@@ -107,7 +108,7 @@ const MyTrades = () => {
                 >
                   <div className="p-6">
                     <div className="flex items-center mb-4">
-                      <img src={trade.avatar} alt={trade.user} className="w-10 h-10 rounded-full mr-3" />
+                      <Image src={trade.avatar} alt={trade.user} className="w-10 h-10 rounded-full mr-3" />
                       <span className="font-medium">{trade.user}</span>
                     </div>
                     <h3 className="text-xl font-semibold mb-2">{trade.title}</h3>
@@ -133,7 +134,7 @@ const MyTrades = () => {
                 >
                   <div className="p-6">
                     <div className="flex items-center mb-4">
-                      <img src={trade.avatar} alt={trade.user} className="w-10 h-10 rounded-full mr-3" />
+                      <Image src={trade.avatar} alt={trade.user} className="w-10 h-10 rounded-full mr-3" />
                       <span className="font-medium">{trade.user}</span>
                     </div>
                     <h3 className="text-xl font-semibold mb-2">{trade.title}</h3>

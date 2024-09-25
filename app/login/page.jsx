@@ -6,6 +6,7 @@ import {signIn} from "next-auth/react";
 import LoadingWrapper from "@/components/navbar/loadingwrapper/loadingwrapper";
 import {toast} from "sonner";
 import {useSession} from "next-auth/react";
+import Image from "next/image";
 
 const LoginPage = () => {
     const [email, setEmail] = useState("");
@@ -50,7 +51,7 @@ const LoginPage = () => {
         <div className="flex min-h-screen items-center justify-center bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-md w-full space-y-8">
                 <div>
-                    <img
+                    <Image
                         className="mx-auto h-40 w-auto"
                         src="/barterlogo.png"
                         alt="Your Company"
@@ -111,7 +112,7 @@ const LoginPage = () => {
 
                 <div className="mt-6">
                     <p className="text-center text-sm text-gray-400">
-                        Don't have an account?{" "}
+                        Don&apos;t have an account?{" "}
                         <a
                             href="/register"
                             className="font-medium text-indigo-400 hover:text-indigo-300"

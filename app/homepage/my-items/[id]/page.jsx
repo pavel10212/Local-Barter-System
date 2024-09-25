@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { FaPlus, FaEdit, FaTrash, FaImage } from "react-icons/fa";
+import Image from "next/image";
 
 const MyItems = () => {
   const [items, setItems] = useState([]);
@@ -16,7 +17,6 @@ const MyItems = () => {
   const [previewImage, setPreviewImage] = useState(null);
 
   useEffect(() => {
-    // Fetch items or use dummy data
     setItems([
       { id: 1, name: "Vintage Guitar", description: "1970s Fender Stratocaster", condition: "Good", image: "/dummy-guitar.jpg" },
       { id: 2, name: "Mountain Bike", description: "Trek Fuel EX 8", condition: "Excellent", image: "/dummy-bike.jpg" },
@@ -97,7 +97,7 @@ const MyItems = () => {
               <CardContent>
                 <div className="h-48 bg-gray-600 flex items-center justify-center mb-4">
                   {item.image ? (
-                    <img src={item.image} alt={item.name} className="h-full w-full object-cover" />
+                    <Image src={item.image} alt={item.name} className="h-full w-full object-cover" />
                   ) : (
                     <FaImage className="text-4xl text-gray-400" />
                   )}
@@ -118,7 +118,7 @@ const MyItems = () => {
             </DialogTitle>
             <div className="mb-4">
               {selectedItem.image && (
-                <img src={selectedItem.image} alt={selectedItem.name} className="w-full h-64 object-cover mb-4 rounded" />
+                <Image src={selectedItem.image} alt={selectedItem.name} className="w-full h-64 object-cover mb-4 rounded" />
               )}
               <p className="text-gray-400">{selectedItem.description}</p>
               <p className="mt-2">Condition: {selectedItem.condition}</p>
@@ -207,7 +207,7 @@ const MyItems = () => {
               </Button>
               {previewImage && (
                 <div className="mt-4">
-                  <img src={previewImage} alt="Preview" className="w-full h-48 object-cover rounded" />
+                  <Image src={previewImage} alt="Preview" className="w-full h-48 object-cover rounded" />
                 </div>
               )}
             </div>

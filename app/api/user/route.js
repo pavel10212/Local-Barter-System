@@ -13,6 +13,5 @@ export async function GET() {
             userId: session.user.id
         },
     })
-    console.log(user)
     return NextResponse.json(user)
 }

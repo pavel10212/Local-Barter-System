@@ -8,15 +8,16 @@ generator client {
 }
 
 model User {
-  userId      String   @id @default(auto()) @map("_id") @db.ObjectId
-  email       String   @unique
-  password    String
-  firstName   String?
-  lastName    String?
-  address     String?
-  phoneNumber String?
-  items       Item[]
-  barters     Barter[]
+  userId         String   @id @default(auto()) @map("_id") @db.ObjectId
+  email          String   @unique
+  password       String
+  firstName      String?
+  lastName       String?
+  profileImageId String?  @db.ObjectId
+  address        String?
+  phoneNumber    String?
+  items          Item[]
+  barters        Barter[]
 }
 
 model Item {
@@ -30,11 +31,25 @@ model Item {
 }
 
 model Barter {
-  barterId    String @id @default(auto()) @map("_id") @db.ObjectId
-  itemOwner   User   @relation(fields: [userId], references: [userId])
-  userId      String @db.ObjectId
-  itemOffered Item   @relation("ItemToBarter", fields: [itemId], references: [itemId], onDelete: Cascade)
-  itemId      String @db.ObjectId
-  itemSeeking String
-  status      String
+  barterId     String  @id @default(auto()) @map("_id") @db.ObjectId
+  itemOwner    User    @relation(fields: [userId], references: [userId])
+  userId       String  @db.ObjectId
+  itemOffered  Item    @relation("ItemToBarter", fields: [itemId], references: [itemId], onDelete: Cascade)
+  itemId       String  @db.ObjectId
+  counterOffer String?
+  itemSeeking  String
+  status       String
 }
+
+model Image {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  filename    String
+  contentType String
+  uploadDate  DateTime @default(now())
+}
+
+// Statuses
+// Created
+// CounterOffered
+// Accepted
+// Rejected
