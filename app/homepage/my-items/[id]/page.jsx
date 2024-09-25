@@ -97,7 +97,8 @@ const MyItems = () => {
               <CardContent>
                 <div className="h-48 bg-gray-600 flex items-center justify-center mb-4">
                   {item.image ? (
-                    <Image src={item.image} alt={item.name} className="h-full w-full object-cover" />
+                    <Image width={200} height={200}
+                     src={item.image} alt={item.name} className="h-full w-full object-cover" />
                   ) : (
                     <FaImage className="text-4xl text-gray-400" />
                   )}
@@ -118,7 +119,8 @@ const MyItems = () => {
             </DialogTitle>
             <div className="mb-4">
               {selectedItem.image && (
-                <Image src={selectedItem.image} alt={selectedItem.name} className="w-full h-64 object-cover mb-4 rounded" />
+                <Image width={400} height={400} 
+                 src={selectedItem.image} alt={selectedItem.name} className="w-full h-64 object-cover mb-4 rounded" />
               )}
               <p className="text-gray-400">{selectedItem.description}</p>
               <p className="mt-2">Condition: {selectedItem.condition}</p>
@@ -207,7 +209,8 @@ const MyItems = () => {
               </Button>
               {previewImage && (
                 <div className="mt-4">
-                  <Image src={previewImage} alt="Preview" className="w-full h-48 object-cover rounded" />
+                  <Image width={400} height={400}
+                   src={previewImage} alt="Preview" className="w-full h-48 object-cover rounded" />
                 </div>
               )}
             </div>
