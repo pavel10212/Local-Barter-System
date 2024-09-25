@@ -9,6 +9,7 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { FaExchangeAlt, FaUserCircle, FaPlus, FaTimes } from "react-icons/fa";
+import Image from "next/image";
 
 const Homepage = () => {
   const [selectedBarter, setSelectedBarter] = useState(null);
@@ -179,7 +180,7 @@ const Homepage = () => {
               <div className="mt-4">
                 <span className="font-semibold">Image:</span>
                 <div className="mt-2">
-                  <img
+                  <Image
                     src={
                       selectedBarter.itemOffered.image ||
                       "https://via.placeholder.com/150"
