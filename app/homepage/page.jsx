@@ -86,7 +86,7 @@ const Homepage = () => {
     }
 
     try {
-      const response = await fetch("/api/create-item", {
+      const response = await fetch("/api/create-barter", {
         method: "POST",
         body: formData,
       });
