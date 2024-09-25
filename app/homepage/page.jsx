@@ -1,14 +1,30 @@
 "use client";
 
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Dialog,
   DialogContent,
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { FaExchangeAlt, FaUserCircle, FaPlus, FaTimes } from "react-icons/fa";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  FaExchangeAlt,
+  FaUserCircle,
+  FaPlus,
+  FaTimes,
+  FaImage,
+} from "react-icons/fa";
 import Image from "next/image";
 
 const Homepage = () => {
@@ -20,8 +36,10 @@ const Homepage = () => {
     name: "",
     itemSeeking: "",
     description: "",
+    image: null,
   });
   const [barters, setBarters] = useState([]);
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     fetchBarters();
@@ -64,7 +82,10 @@ const Homepage = () => {
 
   const handleCreateClose = () => {
     setIsCreateDialogOpen(false);
-    setNewTrade({ name: "", itemSeeking: "", description: "" });
+    setNewTrade({ name: "", itemSeeking: "", description: "", image: null });
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
   const handleInputChange = (e) => {
@@ -72,15 +93,31 @@ const Homepage = () => {
     setNewTrade((prevTrade) => ({ ...prevTrade, [name]: value }));
   };
 
+  const handleImageChange = (e) => {
+    setNewTrade((prevTrade) => ({ ...prevTrade, image: e.target.files[0] }));
+  };
+
+  const handleRemoveImage = () => {
+    setNewTrade((prevTrade) => ({ ...prevTrade, image: null }));
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append("name", newTrade.name);
+    formData.append("itemSeeking", newTrade.itemSeeking);
+    formData.append("description", newTrade.description);
+    if (newTrade.image) {
+      formData.append("image", newTrade.image);
+    }
+
     try {
       const response = await fetch("/api/create-item", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newTrade),
+        body: formData,
       });
 
       if (response.ok) {
@@ -110,38 +147,43 @@ const Homepage = () => {
       <main className="container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-semibold">Available Barters</h2>
-          <button
-            className="flex items-center bg-black text-white py-2 px-4 rounded-full hover:bg-white hover:text-black transition duration-300"
+          <Button
             onClick={handleCreateClick}
+            className="bg-black text-white hover:bg-white hover:text-black"
           >
             <FaPlus className="mr-2" />
             Create
-          </button>
+          </Button>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {barters.map((barter) => (
-            <div
+            <Card
               key={barter.barterId}
-              className="bg-gray-700 rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-xl transition duration-300 transform hover:-translate-y-1"
+              className="bg-gray-700 text-white cursor-pointer hover:shadow-xl transition duration-300 transform hover:-translate-y-1"
               onClick={() => handleBarterClick(barter)}
             >
-              <div className="p-6">
-                <div className="flex items-center mb-4">
-                  <FaUserCircle className="w-10 h-10 text-gray-400 mr-3" />
-                  <span className="font-medium">
-                    {barter.itemOwner.firstName} {barter.itemOwner.lastName}
-                  </span>
+              <CardHeader>
+                <CardTitle>{barter?.itemOffered?.name}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="h-48 bg-gray-600 flex items-center justify-center mb-4">
+                  {barter.itemOffered.image ? (
+                    <Image
+                      src={barter.itemOffered.image}
+                      alt={barter?.itemOffered?.name}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <FaImage className="text-4xl text-gray-400" />
+                  )}
                 </div>
-                <h3 className="text-xl font-semibold mb-2">
-                  {barter?.itemOffered?.name}
-                </h3>
-                <div className="flex items-center text-gray-400">
-                  <FaExchangeAlt className="mr-2" />
-                  <span>{barter.itemSeeking}</span>
-                </div>
-              </div>
-            </div>
+                <p className="text-gray-400 mb-2">
+                  {barter.itemOffered.description}
+                </p>
+                <p className="text-sm">Seeking: {barter.itemSeeking}</p>
+              </CardContent>
+            </Card>
           ))}
         </div>
       </main>
@@ -200,7 +242,7 @@ const Homepage = () => {
                   Your Counter Offer
                 </label>
                 <div className="flex items-center">
-                  <input
+                  <Input
                     id="counterOffer"
                     type="text"
                     className="w-full p-2 bg-gray-700 border border-gray-600 rounded text-white pr-10"
@@ -217,15 +259,15 @@ const Homepage = () => {
             )}
 
             <div className="flex justify-end space-x-4">
-              <button
+              <Button
                 className="px-6 py-2 rounded bg-yellow-600 hover:bg-yellow-500 transition duration-300"
                 onClick={handleCounterOfferClick}
               >
                 {isCounterOfferVisible ? "Send Counter Offer" : "Counter Offer"}
-              </button>
-              <button className="px-4 py-2 rounded bg-green-600 hover:bg-green-500 transition duration-300">
+              </Button>
+              <Button className="px-4 py-2 rounded bg-green-600 hover:bg-green-500 transition duration-300">
                 Accept
-              </button>
+              </Button>
             </div>
             <div className="mt-4">
               <label
@@ -259,7 +301,7 @@ const Homepage = () => {
               <label htmlFor="name" className="block text-sm font-medium mb-2">
                 Item Name
               </label>
-              <input
+              <Input
                 id="name"
                 name="name"
                 type="text"
@@ -277,7 +319,7 @@ const Homepage = () => {
               >
                 Item Seeking
               </label>
-              <input
+              <Input
                 id="itemSeeking"
                 name="itemSeeking"
                 type="text"
@@ -295,7 +337,7 @@ const Homepage = () => {
               >
                 Description
               </label>
-              <textarea
+              <Textarea
                 id="description"
                 name="description"
                 rows="4"
@@ -306,20 +348,49 @@ const Homepage = () => {
                 placeholder="Provide more details about your item..."
               />
             </div>
+            <div>
+              <label htmlFor="image" className="block text-sm font-medium mb-2">
+                Image
+              </label>
+              <div className="relative">
+                <Input
+                  id="image"
+                  name="image"
+                  type="file"
+                  className="w-full p-3 bg-gray-700 border border-gray-600 rounded-md text-white focus:ring-2 focus:ring-white focus:border-transparent transition duration-300"
+                  onChange={handleImageChange}
+                  ref={fileInputRef}
+                />
+                {newTrade.image && (
+                  <div className="relative mt-2">
+                    <img
+                      src={URL.createObjectURL(newTrade.image)}
+                      alt="Selected"
+                      className="w-full h-auto rounded-md"
+                    />
+                    <FaTimes
+                      className="absolute top-2 right-2 text-white bg-red-600 rounded-full p-1 cursor-pointer"
+                      onClick={handleRemoveImage}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
             <div className="flex justify-end space-x-3">
-              <button
+              <Button
                 type="button"
+                variant="outline"
                 onClick={handleCreateClose}
                 className="bg-gray-700 text-white py-2 px-4 rounded-md hover:bg-gray-600 transition duration-300"
               >
                 Cancel
-              </button>
-              <button
+              </Button>
+              <Button
                 type="submit"
                 className="bg-black text-white py-2 px-4 rounded-md hover:bg-white hover:text-black transition duration-300"
               >
                 Submit
-              </button>
+              </Button>
             </div>
           </form>
         </DialogContent>
