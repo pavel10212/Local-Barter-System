@@ -10,9 +10,12 @@ export async function GET() {
             }
         });
 
-        return new NextResponse(200, barters);
+        return NextResponse.json(barters);
     } catch (error) {
         console.error("Error fetching barters:", error);
-        return new NextResponse(500, {message: "Error fetching barters"});
+        return NextResponse.json(
+            {message: "Error fetching barters"},
+            {status: 500}
+        );
     }
 }
