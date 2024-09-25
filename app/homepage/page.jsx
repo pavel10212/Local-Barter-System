@@ -222,7 +222,7 @@ const Homepage = () => {
               <div className="mt-4">
                 <span className="font-semibold">Image:</span>
                 <div className="mt-2">
-                  <img
+                  <Image
                     src={
                       selectedBarter.itemOffered.image ||
                       "https://via.placeholder.com/150"

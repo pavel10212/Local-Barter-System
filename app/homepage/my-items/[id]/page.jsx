@@ -168,12 +168,18 @@ const Homepage = () => {
               </CardHeader>
               <CardContent>
                 <div className="h-48 bg-gray-600 flex items-center justify-center mb-4">
+<<<<<<< HEAD
                   {barter.itemOffered.image ? (
                     <Image
                       src={barter.itemOffered.image}
                       alt={barter?.itemOffered?.name}
                       className="h-full w-full object-cover"
                     />
+=======
+                  {item.image ? (
+                    <Image width={200} height={200}
+                     src={item.image} alt={item.name} className="h-full w-full object-cover" />
+>>>>>>> 1eef8fd3a5e4676bc06534d7d44a168e2a8f4958
                   ) : (
                     <FaImage className="text-4xl text-gray-400" />
                   )}
@@ -194,6 +200,7 @@ const Homepage = () => {
             <DialogTitle className="text-2xl font-bold mb-4">
               {selectedBarter.itemOffered.name}
             </DialogTitle>
+<<<<<<< HEAD
             <DialogDescription className="text-gray-400 mb-6">
               <div className="flex items-center">
                 <FaUserCircle className="mr-2" />
@@ -258,6 +265,16 @@ const Homepage = () => {
               </div>
             )}
 
+=======
+            <div className="mb-4">
+              {selectedItem.image && (
+                <Image width={400} height={400} 
+                 src={selectedItem.image} alt={selectedItem.name} className="w-full h-64 object-cover mb-4 rounded" />
+              )}
+              <p className="text-gray-400">{selectedItem.description}</p>
+              <p className="mt-2">Condition: {selectedItem.condition}</p>
+            </div>
+>>>>>>> 1eef8fd3a5e4676bc06534d7d44a168e2a8f4958
             <div className="flex justify-end space-x-4">
               <Button
                 className="px-6 py-2 rounded bg-yellow-600 hover:bg-yellow-500 transition duration-300"
@@ -352,6 +369,7 @@ const Homepage = () => {
               <label htmlFor="image" className="block text-sm font-medium mb-2">
                 Image
               </label>
+<<<<<<< HEAD
               <div className="relative">
                 <Input
                   id="image"
@@ -375,6 +393,31 @@ const Homepage = () => {
                   </div>
                 )}
               </div>
+=======
+              <Input
+                id="image"
+                name="image"
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="hidden"
+              />
+              <Button
+                type="button"
+                onClick={() => document.getElementById('image').click()}
+                variant="outline"
+                className="w-full"
+              >
+                <FaImage className="mr-2" />
+                {previewImage ? "Change Image" : "Upload Image"}
+              </Button>
+              {previewImage && (
+                <div className="mt-4">
+                  <Image width={400} height={400}
+                   src={previewImage} alt="Preview" className="w-full h-48 object-cover rounded" />
+                </div>
+              )}
+>>>>>>> 1eef8fd3a5e4676bc06534d7d44a168e2a8f4958
             </div>
             <div className="flex justify-end space-x-3">
               <Button

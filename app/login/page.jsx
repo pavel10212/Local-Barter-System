@@ -51,7 +51,7 @@ const LoginPage = () => {
         <div className="flex min-h-screen items-center justify-center bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-md w-full space-y-8">
                 <div>
-                    <Image
+                    <Image width={40} height={40}
                         className="mx-auto h-40 w-auto"
                         src="/barterlogo.png"
                         alt="Your Company"
