@@ -10,8 +10,9 @@ export async function GET() {
 
     const user = await prisma.user.findFirst({
         where: {
-            id: session.id
+            userId: session.user.id
         },
     })
+    console.log(user)
     return NextResponse.json(user)
 }

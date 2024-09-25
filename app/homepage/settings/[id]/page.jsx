@@ -13,9 +13,11 @@ const SettingsPage = () => {
     const [address, setAddress] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
 
+
     useEffect(() => {
         getUserData();
     }, []);
+
 
     const getUserData = async () => {
         try {
