@@ -11,7 +11,6 @@ export async function POST(req) {
                 itemId: body.id
             }
         })
-
         if (!item) {
             return NextResponse.json({message: "Item not found"}, {status: 404});
         }

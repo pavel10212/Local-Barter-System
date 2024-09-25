@@ -18,6 +18,7 @@ const MyItems = () => {
     const [previewImage, setPreviewImage] = useState(null);
     const [blob, setBlob] = useState(null);
     const {data: session} = useSession();
+    const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
 
     useEffect(() => {
         fetchAllItems();
@@ -64,7 +65,8 @@ const MyItems = () => {
         const file = e.target.files[0];
         if (file) {
             try {
-                const response = await fetch(`/api/upload?filename=${session?.user?.id}/${file.name}`, {
+                const filename = `${session?.user?.id}/${Date.now()}_${file.name}`;
+                const response = await fetch(`/api/upload?filename=${filename}`, {
                     method: 'POST',
                     body: file,
                 });
@@ -85,6 +87,54 @@ const MyItems = () => {
         }
     };
 
+
+    const handleItemEdit = (item) => {
+        handleClose();
+        setSelectedItem(item);
+        setNewItem({
+            name: item.name,
+            description: item.description,
+            condition: item.condition,
+            image: item.image
+        });
+        setPreviewImage(item.image);
+        setIsEditDialogOpen(true);
+    };
+
+    const handleEditSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            let updatedImage = newItem.image;
+            if (blob && blob.url !== selectedItem.image) {
+                updatedImage = blob.url;
+            }
+            const response = await fetch("/api/editItem", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    id: selectedItem.itemId,
+                    name: newItem.name,
+                    description: newItem.description,
+                    image: updatedImage,
+                }),
+            });
+            if (!response.ok) {
+                throw new Error("Failed to edit item");
+            }
+            const updatedItem = await response.json();
+            setItems(items.map((item) => (item.itemId === selectedItem.itemId ? updatedItem : item)));
+            setIsEditDialogOpen(false);
+            setSelectedItem(null);
+            setBlob(null);
+            setPreviewImage(null);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     const handleItemDelete = async (item) => {
         try {
             const response = await fetch("/api/deleteItem", {
@@ -99,13 +149,11 @@ const MyItems = () => {
             if (!response.ok) {
                 throw new Error("Failed to delete item");
             }
-            // Wait for the API call to complete before updating state
             await response.json();
             setItems(items.filter((i) => i.itemId !== item.itemId));
             handleClose();
         } catch (error) {
             console.error(error);
-            // Add user feedback here, e.g., show an error message
         }
     };
 
@@ -171,7 +219,6 @@ const MyItems = () => {
                                     )}
                                 </div>
                                 <p className="text-gray-400 mb-2">{item.description}</p>
-                                <p className="text-sm">Condition: {item.condition}</p>
                             </CardContent>
                         </Card>
                     ))}
@@ -191,10 +238,11 @@ const MyItems = () => {
                                        className="w-full h-64 object-cover mb-4 rounded"/>
                             )}
                             <p className="text-gray-400">{selectedItem.description}</p>
-                            <p className="mt-2">Condition: {selectedItem.condition}</p>
                         </div>
                         <div className="flex justify-end space-x-4">
-                            <Button variant="outline" className="bg-blue-600 hover:bg-blue-500">
+                            <Button variant="outline" className="bg-blue-600 hover:bg-blue-500"
+                                    onClick={() => handleItemEdit(selectedItem)}
+                            >
                                 <FaEdit className="mr-2"/>
                                 Edit
                             </Button>
@@ -242,20 +290,6 @@ const MyItems = () => {
                             />
                         </div>
                         <div>
-                            <label htmlFor="condition" className="block text-sm font-medium mb-2">
-                                Condition
-                            </label>
-                            <Input
-                                id="condition"
-                                name="condition"
-                                value={newItem.condition}
-                                onChange={handleInputChange}
-                                required
-                                placeholder="Item condition"
-                                className="bg-gray-700 text-white"
-                            />
-                        </div>
-                        <div>
                             <label htmlFor="image" className="block text-sm font-medium mb-2">
                                 Item Image
                             </label>
@@ -293,6 +327,84 @@ const MyItems = () => {
                             </Button>
                         </div>
                     </form>
+                </DialogContent>
+            </Dialog>
+            <Dialog open={isEditDialogOpen} onOpenChange={() => {
+                setIsEditDialogOpen(false);
+                setSelectedItem(null);
+            }}>
+                <DialogContent className="bg-gray-800 text-white">
+                    <DialogTitle className="text-2xl font-bold mb-6 text-center">Edit Item</DialogTitle>
+                    {selectedItem && (
+                        <form onSubmit={handleEditSubmit} className="space-y-6">
+                            <div>
+                                <label htmlFor="edit-name" className="block text-sm font-medium mb-2">
+                                    Item Name
+                                </label>
+                                <Input
+                                    id="edit-name"
+                                    name="name"
+                                    value={newItem.name}
+                                    onChange={handleInputChange}
+                                    required
+                                    placeholder="Enter item name"
+                                    className="bg-gray-700 text-white"
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="edit-description" className="block text-sm font-medium mb-2">
+                                    Description
+                                </label>
+                                <Textarea
+                                    id="edit-description"
+                                    name="description"
+                                    rows="4"
+                                    value={newItem.description}
+                                    onChange={handleInputChange}
+                                    required
+                                    placeholder="Describe your item"
+                                    className="bg-gray-700 text-white"
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="edit-image" className="block text-sm font-medium mb-2">
+                                    Item Image
+                                </label>
+                                <Input
+                                    id="edit-image"
+                                    name="image"
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handleImageChange}
+                                    className="hidden"
+                                />
+                                <Button
+                                    type="button"
+                                    onClick={() => document.getElementById('edit-image').click()}
+                                    variant="outline"
+                                    className="w-full"
+                                >
+                                    <FaImage className="mr-2"/>
+                                    {previewImage ? "Change Image" : "Upload Image"}
+                                </Button>
+                                {previewImage && (
+                                    <div className="mt-4">
+                                        <Image width={400} height={400}
+                                               src={previewImage} alt="Preview"
+                                               className="w-full h-48 object-cover rounded"/>
+                                    </div>
+                                )}
+                            </div>
+                            <div className="flex justify-end space-x-3">
+                                <Button type="button" variant="outline" onClick={() => setIsEditDialogOpen(false)}>
+                                    Cancel
+                                </Button>
+                                <Button type="submit">
+                                    Save Changes
+                                </Button>
+                            </div>
+                        </form>
+                    )}
                 </DialogContent>
             </Dialog>
         </div>
