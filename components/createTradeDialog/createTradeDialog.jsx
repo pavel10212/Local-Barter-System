@@ -26,14 +26,14 @@ const CreateTradeDialog = ({
                         <select
                             id="item"
                             name="item"
-                            value={newTrade.item}
-                            onChange={handleInputChange}
+                            value={newTrade.itemId}
+                            onChange={(e) => handleInputChange(e, items)}
                             className="w-full p-3 bg-gray-700 border border-gray-600 rounded-md text-white focus:ring-2 focus:ring-white focus:border-transparent transition duration-300"
                             required
                         >
                             <option value="">Select an item to offer</option>
                             {items.map((item) => (
-                                <option key={item.id} value={item.id}>
+                                <option key={item.itemId} value={item.itemId}>
                                     {item.name}
                                 </option>
                             ))}

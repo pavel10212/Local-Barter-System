@@ -10,21 +10,26 @@ export async function POST(req) {
             return NextResponse.json({error: "Unauthorized"}, {status: 401});
         }
         const userId = session.user.id;
-        console.log(body)
 
         const barter = await prisma.barter.create({
             data: {
                 itemOffered: {
                     connect: {
-                        id: body.itemOfferedId
+                        itemId: body.itemId
+                    }
+                },
+                itemSeeking: body.itemSeeking,
+                description: body.description,
+                status: "OPEN",
+                itemOwner: {
+                    connect: {
+                        userId
                     }
                 }
             }
-        })
+        });
 
-
-
-
+        return NextResponse.json(barter, {status: 201});
     } catch (error) {
         console.error("Error creating item:", error);
         return NextResponse.json({error: "Failed to create item", details: error.message}, {status: 500});

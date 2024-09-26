@@ -36,6 +36,7 @@ model Barter {
   userId       String  @db.ObjectId
   itemOffered  Item    @relation("ItemToBarter", fields: [itemId], references: [itemId], onDelete: Cascade)
   itemId       String  @db.ObjectId
+  description  String?
   counterOffer String?
   itemSeeking  String
   status       String
@@ -47,9 +48,3 @@ model Image {
   contentType String
   uploadDate  DateTime @default(now())
 }
-
-// Statuses
-// Created
-// CounterOffered
-// Accepted
-// Rejected

@@ -15,7 +15,8 @@ const Homepage = () => {
     const [counterOffer, setCounterOffer] = useState("");
     const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
     const [newTrade, setNewTrade] = useState({
-        item: "",
+        itemId: "",
+        itemName: "",
         itemSeeking: "",
         description: "",
     });
@@ -79,20 +80,29 @@ const Homepage = () => {
 
     const handleCreateClose = () => {
         setIsCreateDialogOpen(false);
-        setNewTrade({name: "", itemSeeking: "", description: "", image: null});
+        setNewTrade({
+            itemId: "",
+            itemName: "",
+            itemSeeking: "",
+            description: "",
+        });
     };
 
-    const handleInputChange = (e) => {
+    const handleInputChange = (e, items) => {
         const {name, value} = e.target;
-        setNewTrade((prevTrade) => ({...prevTrade, [name]: value}));
-    };
-
-    const handleImageChange = (e) => {
-        setNewTrade((prevTrade) => ({...prevTrade, image: e.target.files[0]}));
-    };
-
-    const handleRemoveImage = () => {
-        setNewTrade((prevTrade) => ({...prevTrade, image: null}));
+        if (name === "item") {
+            const selectedItem = items.find(item => item.itemId === value);
+            setNewTrade({
+                ...newTrade,
+                itemId: value,
+                itemName: selectedItem ? selectedItem.name : "",
+            });
+        } else {
+            setNewTrade({
+                ...newTrade,
+                [name]: value,
+            });
+        }
     };
 
     const handleFormSubmit = async (e) => {
@@ -106,9 +116,8 @@ const Homepage = () => {
                 body: JSON.stringify(newTrade),
             });
             if (response.ok) {
-                await response.json();
-                const updatedBarters = await fetchBarters();
-                setBarters(updatedBarters);
+                const barter = await response.json();
+                setBarters([...barters, barter])
                 handleCreateClose();
             } else {
                 console.error("Failed to create item");
