@@ -17,7 +17,8 @@ model User {
   address        String?
   phoneNumber    String?
   items          Item[]
-  barters        Barter[]
+  barters        Barter[] @relation("BarterOwner")
+  counterOffers  Barter[] @relation("CounterOfferUser")
 }
 
 model Item {
@@ -31,15 +32,17 @@ model Item {
 }
 
 model Barter {
-  barterId     String  @id @default(auto()) @map("_id") @db.ObjectId
-  itemOwner    User    @relation(fields: [userId], references: [userId])
-  userId       String  @db.ObjectId
-  itemOffered  Item    @relation("ItemToBarter", fields: [itemId], references: [itemId], onDelete: Cascade)
-  itemId       String  @db.ObjectId
-  description  String?
-  counterOffer String?
-  itemSeeking  String
-  status       String
+  barterId           String  @id @default(auto()) @map("_id") @db.ObjectId
+  barterOwner        User    @relation("BarterOwner", fields: [userId], references: [userId])
+  userId             String  @db.ObjectId
+  itemOffered        Item    @relation("ItemToBarter", fields: [itemId], references: [itemId], onDelete: Cascade)
+  itemId             String  @db.ObjectId
+  description        String?
+  counterOffer       String?
+  counterOfferUser   User?   @relation("CounterOfferUser", fields: [counterOfferUserId], references: [userId])
+  counterOfferUserId String? @db.ObjectId
+  itemSeeking        String
+  status             String
 }
 
 model Image {

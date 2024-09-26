@@ -1,5 +1,5 @@
 "use client";
-import React, {useState} from "react";
+import {useEffect, useState} from "react";
 import {Dialog, DialogContent, DialogTitle, DialogDescription} from "@/components/ui/dialog";
 import {Tabs, TabsList, TabsTrigger, TabsContent} from "@/components/ui/tabs";
 import {FaExchangeAlt, FaUserCircle} from "react-icons/fa";
@@ -9,50 +9,34 @@ const MyTrades = () => {
     const [selectedTrade, setSelectedTrade] = useState(null);
     const [isCounterOfferVisible, setIsCounterOfferVisible] = useState(false);
     const [counterOffer, setCounterOffer] = useState("");
+    const [incomingBarters, setIncomingBarters] = useState([]);
+    const [outgoingBarters, setOutgoingBarters] = useState([]);
 
-    const incomingTrades = [
-        {
-            id: 1,
-            title: "Trade: Book Exchange",
-            user: "Emily Clark",
-            avatar: "/favicon.ico",
-            seeking: "New Books",
-            status: "counter",
-            address: "123 Main St, Bangkok, Thailand",
-            counterOffer: "I can offer a rare edition of a classic novel.",
-        },
-        {
-            id: 2,
-            title: "Trade: Plant Swap",
-            user: "Michael Brown",
-            avatar: "/favicon.ico",
-            seeking: "Rare Plants",
-            status: "accepted",
-            address: "456 Elm St, Chiang Mai, Thailand",
-        },
-    ];
+    useEffect(() => {
+        fetchOutgoingBarters();
+        fetchIncomingBarters();
+    }, []);
 
-    const outgoingTrades = [
-        {
-            id: 3,
-            title: "Trade: Art Supplies for Craft Materials",
-            user: "Sophia Turner",
-            avatar: "/favicon.ico",
-            seeking: "Craft Materials",
-            status: "counter",
-            counterOffer: "I can offer 10 packs of craft materials instead of 5.",
-            address: "789 Oak St, Phuket, Thailand",
-        },
-        {
-            id: 4,
-            title: "Trade: Baking Goods for Fresh Produce",
-            user: "Liam Johnson",
-            avatar: "/favicon.ico",
-            seeking: "Fresh Produce",
-            status: "accepted",
-            address: "101 Pine St, Pattaya, Thailand",
-        },
-    ];
+
+    const fetchIncomingBarters = async () => {
+        try {
+            const response = await fetch("api/incoming-barters")
+            const data = await response.json()
+            setIncomingBarters(data)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    const fetchOutgoingBarters = async () => {
+        try {
+            const response = await fetch("api/outgoing-barters")
+            const data = await response.json()
+            setOutgoingBarters(data)
+        } catch (error) {
+            console.error(error)
+        }
+    }
 
     const handleTradeClick = (trade) => {
         setSelectedTrade(trade);
@@ -69,13 +53,11 @@ const MyTrades = () => {
     };
 
     const handleAcceptCounterOffer = () => {
-        // Logic to accept the counteroffer
         alert("Counter offer accepted!");
         handleClose();
     };
 
     const handleDeclineCounterOffer = () => {
-        // Logic to decline the counteroffer
         alert("Counter offer declined!");
         handleClose();
     };
@@ -98,7 +80,7 @@ const MyTrades = () => {
 
                     <TabsContent value="publicListings">
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {incomingTrades.map((trade) => (
+                            {incomingBarters.map((trade) => (
                                 <div
                                     key={trade.id}
                                     className={`rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-xl transition duration-300 transform hover:-translate-y-1 ${
@@ -126,7 +108,7 @@ const MyTrades = () => {
 
                     <TabsContent value="myOffers">
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {outgoingTrades.map((trade) => (
+                            {outgoingBarters.map((trade) => (
                                 <div
                                     key={trade.id}
                                     className={`rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-xl transition duration-300 transform hover:-translate-y-1 ${

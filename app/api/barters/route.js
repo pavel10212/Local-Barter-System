@@ -5,8 +5,9 @@ export async function GET() {
     try {
         const barters = await prisma.barter.findMany({
             include: {
-                itemOwner: true,
-                itemOffered: true
+                barterOwner: true,
+                itemOffered: true,
+                counterOfferUser: true
             }
         });
 

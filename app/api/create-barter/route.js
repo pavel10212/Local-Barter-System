@@ -21,11 +21,15 @@ export async function POST(req) {
                 itemSeeking: body.itemSeeking,
                 description: body.description,
                 status: "OPEN",
-                itemOwner: {
+                barterOwner: {
                     connect: {
                         userId
                     }
                 }
+            },
+            include: {
+                itemOffered: true,
+                barterOwner: true
             }
         });
 
