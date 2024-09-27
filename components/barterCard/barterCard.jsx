@@ -9,23 +9,19 @@ const BarterCard = ({barter, onClick}) => (
         onClick={() => onClick(barter)}
     >
         <CardHeader>
-            <CardTitle>{barter?.itemOffered?.name}</CardTitle>
+            <CardTitle>{barter?.item?.name}</CardTitle>
         </CardHeader>
         <CardContent>
             <div className="h-48 bg-gray-600 flex items-center justify-center mb-4">
-                {barter?.itemOffered?.image ? (
-                    <Image
-                        width={150}
-                        height={150}
-                        src={barter?.itemOffered?.image || "/favicon.ico"}
-                        alt={barter?.itemOffered?.name}
-                        className="h-full w-full object-cover"
-                    />
-                ) : (
-                    <FaImage className="text-4xl text-gray-400"/>
-                )}
+                <Image
+                    width={150}
+                    height={150}
+                    src={barter?.item?.image || "/favicon.ico"}
+                    alt={barter?.item?.name}
+                    className="h-full w-full object-cover"
+                />
             </div>
-            <p className="text-gray-400 mb-2">{barter?.itemOffered?.description}</p>
+            <p className="text-gray-400 mb-2">{barter?.item?.description}</p>
             <p className="text-sm">Seeking: {barter?.itemSeeking}</p>
         </CardContent>
     </Card>

@@ -18,31 +18,39 @@ model User {
   phoneNumber    String?
   items          Item[]
   barters        Barter[] @relation("BarterOwner")
-  counterOffers  Barter[] @relation("CounterOfferUser")
+  offers         Offer[]  @relation("OfferCreator")
 }
 
 model Item {
-  itemId             String   @id @default(auto()) @map("_id") @db.ObjectId
-  name               String
-  description        String
-  image              String?
-  itemOwner          User     @relation(fields: [userId], references: [userId])
-  userId             String   @db.ObjectId
-  barteredItem       Barter[] @relation("ItemToBarter")
-  counterOfferedItem Barter[] @relation("CounterOfferItem")
+  itemId      String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String
+  image       String?
+  itemOwner   User     @relation(fields: [userId], references: [userId])
+  userId      String   @db.ObjectId
+  barters     Barter[] @relation("BarterItem")
+  offers      Offer[]  @relation("OfferItem")
 }
 
 model Barter {
-  barterId             String  @id @default(auto()) @map("_id") @db.ObjectId
-  barterOwner          User    @relation("BarterOwner", fields: [userId], references: [userId])
-  userId               String  @db.ObjectId
-  itemOffered          Item    @relation("ItemToBarter", fields: [itemId], references: [itemId], onDelete: Cascade)
-  itemId               String  @db.ObjectId
-  description          String?
-  counterOfferedItem   Item?   @relation("CounterOfferItem", fields: [counterOfferedItemId], references: [itemId])
-  counterOfferedItemId String? @db.ObjectId
-  counterOfferUser     User?   @relation("CounterOfferUser", fields: [counterOfferUserId], references: [userId])
-  counterOfferUserId   String? @db.ObjectId
-  itemSeeking          String
-  status               String
+  barterId    String  @id @default(auto()) @map("_id") @db.ObjectId
+  barterOwner User    @relation("BarterOwner", fields: [userId], references: [userId])
+  userId      String  @db.ObjectId
+  item        Item    @relation("BarterItem", fields: [itemId], references: [itemId], onDelete: Cascade)
+  itemId      String  @db.ObjectId
+  description String?
+  itemSeeking String
+  status      String
+  offers      Offer[] @relation("BarterOffers")
+}
+
+model Offer {
+  offerId      String @id @default(auto()) @map("_id") @db.ObjectId
+  offerCreator User   @relation("OfferCreator", fields: [userId], references: [userId])
+  userId       String @db.ObjectId
+  barter       Barter @relation("BarterOffers", fields: [barterId], references: [barterId], onDelete: Cascade)
+  barterId     String @db.ObjectId
+  item         Item   @relation("OfferItem", fields: [itemId], references: [itemId], onDelete: Cascade)
+  itemId       String @db.ObjectId
+  status       String
 }
