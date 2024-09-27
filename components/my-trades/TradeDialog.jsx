@@ -1,64 +1,93 @@
-import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter} from "@/components/ui/dialog"
-import {Button} from "@/components/ui/button"
-import Image from "next/image"
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import TradeItemDetails from "./TradeItemDetails";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
-const TradeDialog = ({trade, onClose, session}) => {
-    const isIncomingTrade = trade.barterOwner.userId === session.user.id;
+const TradeDialog = ({ trade, onClose, session, onUpdate }) => {
+  const [localTrade, setLocalTrade] = useState(trade);
 
-    return (
-        <Dialog open={true} onOpenChange={onClose}>
-            <DialogContent className="sm:max-w-[425px] bg-gray-800 text-white max-h-[80vh] overflow-y-auto">
-                <DialogHeader>
-                    <DialogTitle>Trade Details</DialogTitle>
-                </DialogHeader>
-                <div className="mt-2">
-                    <p className="text-sm text-gray-300">
-                        {isIncomingTrade ? "Your item:" : "Item you want:"}
-                    </p>
-                    <div className="flex items-center mt-2">
-                        <Image
-                            width={150}
-                            height={300}
-                            src={trade.item?.image || "/favicon.ico"}
-                            alt={trade.item?.name}
-                            className="w-15 h-15 object-cover rounded-md mr-4"
-                        />
-                        <div>
-                            <p className="font-semibold">{trade.item?.name}</p>
-                            <p className="text-sm text-gray-400">{trade.item?.description}</p>
-                        </div>
+  // ... (keep the handleAccept and handleDecline functions as they are)
+
+  return (
+    <Dialog open={!!localTrade} onOpenChange={onClose}>
+      <DialogContent className="bg-gray-800 text-white max-w-3xl max-h-[80vh] overflow-hidden flex flex-col">
+        <DialogTitle className="text-2xl font-bold mb-4">
+          Trade Details
+        </DialogTitle>
+        <DialogDescription className="text-gray-400 overflow-y-auto flex-grow">
+          <div className="space-y-6">
+            <div className="grid grid-cols-2 gap-6">
+              <TradeItemDetails
+                title="Original Item"
+                item={localTrade.itemOffered}
+                owner={localTrade.barterOwner}
+              />
+              <TradeItemDetails
+                title="Item Seeking"
+                item={{ name: localTrade.itemSeeking }}
+                owner={localTrade.barterOwner}
+              />
+            </div>
+            <div>
+              <h3 className="text-xl font-semibold mb-4">Barter Status</h3>
+              <span
+                className={`px-2 py-1 rounded text-xs ${
+                  localTrade.status === "ACCEPTED"
+                    ? "bg-green-600"
+                    : localTrade.status === "DECLINED"
+                    ? "bg-red-600"
+                    : "bg-yellow-600"
+                }`}
+              >
+                {localTrade.status}
+              </span>
+            </div>
+            <div>
+              <h3 className="text-xl font-semibold mb-4">Offers Received</h3>
+              {localTrade.offers && localTrade.offers.length > 0 ? (
+                localTrade.offers.map((offer) => (
+                  <div
+                    key={offer.offerId}
+                    className="bg-gray-700 p-4 rounded-lg mb-4"
+                  >
+                    <TradeItemDetails
+                      title="Offered Item"
+                      item={offer.itemOffered}
+                      owner={offer.offerUser}
+                      isCounterOffer
+                    />
+                    <div className="mt-4 flex justify-end space-x-4">
+                      <Button
+                        onClick={() => handleAccept(offer.offerId)}
+                        className="bg-green-600 hover:bg-green-700"
+                        disabled={localTrade.status !== "PENDING"}
+                      >
+                        Accept
+                      </Button>
+                      <Button
+                        onClick={() => handleDecline(offer.offerId)}
+                        className="bg-red-600 hover:bg-red-700"
+                        disabled={localTrade.status !== "PENDING"}
+                      >
+                        Decline
+                      </Button>
                     </div>
-                </div>
-
-                {isIncomingTrade && (
-                    <div className="mt-4">
-                        <p className="text-sm text-gray-300">Offers:</p>
-                        {trade.offers.map((offer) => (
-                            <div key={offer.offerId} className="mt-2 border-t border-gray-700 pt-2">
-                                <div className="flex items-center">
-                                    <Image
-                                        width={60}
-                                        height={60}
-                                        src={offer.item?.image || "/favicon.ico"}
-                                        alt={offer.item?.name}
-                                        className="w-15 h-15 object-cover rounded-md mr-4"
-                                    />
-                                    <div>
-                                        <p className="font-semibold">{offer.item?.name}</p>
-                                        <p className="text-sm text-gray-400">{offer.item?.description}</p>
-                                        <p className="text-sm text-gray-400">Status: {offer.status}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                )}
-                <DialogFooter>
-                    <Button onClick={onClose}>Close</Button>
-                </DialogFooter>
-            </DialogContent>
-        </Dialog>
-    );
+                  </div>
+                ))
+              ) : (
+                <p>No offers received yet.</p>
+              )}
+            </div>
+          </div>
+        </DialogDescription>
+      </DialogContent>
+    </Dialog>
+  );
 };
 
 export default TradeDialog;
