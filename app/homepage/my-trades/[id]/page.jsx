@@ -89,6 +89,29 @@ const MyTrades = () => {
         });
     };
 
+    const handleBarterAction = async (offerId, action) => {
+        try {
+            const response = await fetch(`/api/manage-barter?offerId=${offerId}&action=${action}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+
+            if (response.ok) {
+                await fetchOutgoingBarters();
+            } else {
+                const errorData = await response.json();
+                console.error(`Failed to ${action} barter:`, errorData.error);
+            }
+        } catch (error) {
+            console.error(`Error ${action}ing barter:`, error);
+        }
+    };
+
+    const handleAccept = (offerId) => handleBarterAction(offerId, "accept");
+    const handleDecline = (offerId) => handleBarterAction(offerId, "decline");
+
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         setIsCreating(true);
@@ -175,6 +198,8 @@ const MyTrades = () => {
                     trade={selectedTrade}
                     onClose={handleClose}
                     session={session}
+                    handleAccept={handleAccept}
+                    handleDecline={handleDecline}
                 />
             )}
 
