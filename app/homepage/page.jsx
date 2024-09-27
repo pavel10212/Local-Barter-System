@@ -12,7 +12,6 @@ const Homepage = () => {
     const [selectedBarter, setSelectedBarter] = useState(null);
     const [items, setItems] = useState([]);
     const [isCounterOfferVisible, setIsCounterOfferVisible] = useState(false);
-    const [counterOffer, setCounterOffer] = useState("");
     const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
     const [newTrade, setNewTrade] = useState({
         itemId: "",
@@ -20,8 +19,8 @@ const Homepage = () => {
         itemSeeking: "",
         description: "",
     });
-
     const [barters, setBarters] = useState([]);
+    const [counterOfferItem, setCounterOfferItem] = useState(null);
 
     useEffect(() => {
         fetchBarters();
@@ -65,13 +64,53 @@ const Homepage = () => {
         setIsCounterOfferVisible(false);
     };
 
-    const handleCounterOfferClick = () => {
+    const handleAcceptClick = async () => {
+        const response = await fetch("api/accept-offer", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(selectedBarter)
+        });
+        if (response.ok) {
+            const updatedBarter = await response.json();
+            setBarters(barters.map(barter => {
+                if (barter.barterId === updatedBarter.barterId) {
+                    return updatedBarter;
+                }
+                return barter;
+            }));
+            setSelectedBarter(null);
+        }
+    }
+
+    const handleCounterOfferClick = async () => {
         setIsCounterOfferVisible(true);
+        if (isCounterOfferVisible) {
+            const response = await fetch("api/counter-offer", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(counterOfferItem)
+            })
+            if (response.ok) {
+                const updatedBarter = await response.json();
+                setBarters(barters.map(barter => {
+                    if (barter.barterId === updatedBarter.barterId) {
+                        return updatedBarter;
+                    }
+                    return barter;
+                }));
+                setIsCounterOfferVisible(false);
+                setCounterOfferItem(null);
+            }
+        }
     };
 
     const handleCancelCounterOfferClick = () => {
         setIsCounterOfferVisible(false);
-        setCounterOffer("");
+        setCounterOfferItem(null);
     };
 
     const handleCreateClick = () => {
@@ -87,6 +126,7 @@ const Homepage = () => {
             description: "",
         });
     };
+
 
     const handleInputChange = (e, items) => {
         const {name, value} = e.target;
@@ -155,11 +195,13 @@ const Homepage = () => {
                 <BarterDialog
                     selectedBarter={selectedBarter}
                     isCounterOfferVisible={isCounterOfferVisible}
-                    counterOffer={counterOffer}
-                    setCounterOffer={setCounterOffer}
+                    counterOfferItem={counterOfferItem}
+                    setCounterOfferItem={setCounterOfferItem}
+                    handleAcceptClick={handleAcceptClick}
                     handleClose={handleClose}
                     handleCounterOfferClick={handleCounterOfferClick}
                     handleCancelCounterOfferClick={handleCancelCounterOfferClick}
+                    items={items}
                 />
             )}
             <CreateTradeDialog

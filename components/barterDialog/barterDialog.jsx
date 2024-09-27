@@ -8,7 +8,6 @@ import {
     DialogDescription,
 } from "@/components/ui/dialog";
 import {Button} from "@/components/ui/button";
-import {Input} from "@/components/ui/input";
 import {
     FaUserCircle,
     FaTimes,
@@ -20,11 +19,13 @@ import Image from "next/image";
 const BarterDialog = ({
                           selectedBarter,
                           isCounterOfferVisible,
-                          counterOffer,
-                          setCounterOffer,
+                          counterOfferItem,
+                          setCounterOfferItem,
                           handleClose,
                           handleCounterOfferClick,
+                          handleAcceptClick,
                           handleCancelCounterOfferClick,
+                          items
                       }) => (
     <Dialog open={!!selectedBarter} onOpenChange={handleClose}>
         <DialogContent className="bg-gray-900 text-white max-w-md mx-auto rounded-lg shadow-xl">
@@ -58,7 +59,7 @@ const BarterDialog = ({
                         <span className="text-gray-400">Status:</span>
                         <span
                             className={`ml-2 px-2 py-1 rounded text-xs ${
-                                selectedBarter.status === "Available"
+                                selectedBarter.status === "OPEN"
                                     ? "bg-green-600"
                                     : "bg-yellow-600"
                             }`}
@@ -85,19 +86,30 @@ const BarterDialog = ({
                             Your Counter Offer
                         </label>
                         <div className="flex items-center">
-                            <Input
-                                id="counterOffer"
-                                type="text"
-                                className="w-full p-2 bg-gray-800 border border-gray-700 rounded text-white pr-10"
-                                placeholder="Enter your counter offer"
-                                value={counterOffer}
-                                onChange={(e) => setCounterOffer(e.target.value)}
-                            />
-                            <FaTimes
-                                className="absolute right-3 text-gray-400 cursor-pointer hover:text-red-500 transition"
-                                onClick={handleCancelCounterOfferClick}
-                            />
+                            <select
+                                id="item"
+                                name="item"
+                                value={counterOfferItem?.item}
+                                onChange={(e) => setCounterOfferItem({
+                                    item: e.target.value,
+                                    barter: selectedBarter.barterId
+                                })}
+                                className="w-full p-3 bg-gray-800 border border-gray-700 rounded-md text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300"
+                                required
+                            >
+                                <option value="">Select an item to offer</option>
+                                {items.map((item) => (
+                                    <option key={item.itemId} value={item.itemId}>
+                                        {item.name}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
+
+                        <FaTimes
+                            className="absolute right-3 text-gray-400 cursor-pointer hover:text-red-500 transition"
+                            onClick={handleCancelCounterOfferClick}
+                        />
                     </div>
                 )}
                 <div className="flex justify-end space-x-4">
@@ -109,6 +121,7 @@ const BarterDialog = ({
                         {isCounterOfferVisible ? "Send Offer" : "Counter Offer"}
                     </Button>
                     <Button
+                        onClick={handleAcceptClick}
                         className="px-6 py-2 rounded bg-green-600 hover:bg-green-500 transition duration-300 flex items-center">
                         <FaCheckCircle className="mr-2"/>
                         Accept
