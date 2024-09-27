@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import {usePathname} from "next/navigation";
 
 const headers = {
     "/homepage": "Welcome to Barter System",

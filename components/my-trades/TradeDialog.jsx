@@ -1,8 +1,8 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
+import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter} from "@/components/ui/dialog"
+import {Button} from "@/components/ui/button"
 import Image from "next/image"
 
-const TradeDialog = ({ trade, onClose, session }) => {
+const TradeDialog = ({trade, onClose, session}) => {
     const isIncomingTrade = trade.barterOwner.userId === session.user.id;
 
     return (
