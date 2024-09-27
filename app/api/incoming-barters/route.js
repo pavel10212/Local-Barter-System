@@ -8,17 +8,18 @@ export async function GET() {
     const incomingBarters = await prisma.barter.findMany({
         where: {
             userId: session.user.id,
-            status: "Counter-offered"
         },
         include: {
-            itemOffered: true,
             barterOwner: true,
-            counterOfferUser: true,
-            counterOfferedItem: true
+            item: true,
+            offers: {
+                include: {
+                    item: true,
+                    offerCreator: true,
+                },
+            },
         }
     })
-
-    console.log(incomingBarters)
 
     return NextResponse.json(incomingBarters)
 }

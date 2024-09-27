@@ -4,21 +4,20 @@ import {NextResponse} from "next/server";
 
 export async function GET() {
     const session = await auth()
-
     const outgoingBarters = await prisma.barter.findMany({
         where: {
-            status: "Counter-offered",
-            counterOfferUserId: session.user.id
+            offers: {
+                some: {
+                    userId: session.user.id
+                }
+            }
         },
         include: {
-            itemOffered: true,
             barterOwner: true,
-            counterOfferUser: true,
-            counterOfferedItem: true,
+            item: true,
+            offers: true,
         }
     })
-
-    console.log(outgoingBarters)
 
     return NextResponse.json(outgoingBarters)
 }
