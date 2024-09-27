@@ -54,7 +54,7 @@ const MyProfile = () => {
 
   const fetchUserBarters = async (userId) => {
     try {
-      const response = await fetch(`/api/incoming-bartersById?userId=${userId}`);
+      const response = await fetch(`/api/incoming-bartersById?userId=${userId}&status=open`);
       if (!response.ok) throw new Error("Failed to fetch barters");
       const data = await response.json();
       setBarters(data);
