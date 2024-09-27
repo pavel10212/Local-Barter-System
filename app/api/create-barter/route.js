@@ -1,6 +1,7 @@
+import {auth} from "@/auth";
 import prisma from "@/lib/prisma";
 import {NextResponse} from "next/server";
-import {auth} from '@/auth'
+
 
 export async function POST(req) {
     try {
@@ -31,10 +32,18 @@ export async function POST(req) {
             }
         });
 
+        const formattedBarter = {
+            barterId: barter.barterId,
+            description: barter.description,
+            itemSeeking: barter.itemSeeking,
+            status: barter.status,
+            createdAt: barter.createdAt,
+            item: barter.item,
+            barterOwner: barter.barterOwner
+        };
 
-        return NextResponse.json(barter, {status: 201});
-    } catch
-        (error) {
+        return NextResponse.json(formattedBarter, {status: 201});
+    } catch (error) {
         console.error("Error creating item:", error);
         return NextResponse.json({error: "Failed to create item", details: error.message}, {status: 500});
     }

@@ -104,27 +104,7 @@ const Homepage = () => {
         setNewTrade({...newTrade, [name]: value});
     };
 
-    const handleFormSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await fetch("/api/create-barter", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(newTrade),
-            });
-            if (response.ok) {
-                const barter = await response.json();
-                setBarters([...barters, barter]);
-                handleCreateClose();
-            } else {
-                console.error("Failed to create barter");
-            }
-        } catch (error) {
-            console.error("Error creating barter:", error);
-        }
-    };
+
 
     return (
         <div className="bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen text-white">
@@ -152,14 +132,6 @@ const Homepage = () => {
                     items={items}
                 />
             )}
-            <CreateTradeDialog
-                isCreateDialogOpen={isCreateDialogOpen}
-                handleCreateClose={handleCreateClose}
-                newTrade={newTrade}
-                handleInputChange={handleInputChange}
-                handleFormSubmit={handleFormSubmit}
-                items={items}
-            />
         </div>
     );
 };
