@@ -2,9 +2,9 @@
 
 import React, { useState, useEffect } from "react";
 
-import BarterCard from "@/components/barterCard/barterCard";
-import BarterDialog from "@/components/barterDialog/barterDialog";
-import CreateTradeDialog from "@/components/createTradeDialog/createTradeDialog";
+import BarterCard from "@/components/BarterCard/BarterCard";
+import BarterDialog from "@/components/BarterDialog/BarterDialog";
+import CreateTradeDialog from "@/components/CreateTradeDialog/CreateTradeDialog";
 import { Button } from "@/components/ui/button";
 import { FaPlus } from "react-icons/fa";
 

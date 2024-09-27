@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from "@/components/navbar/navbar";
-import DynamicHeader from "@/components/DynamicHeader/dynamicHeader";
+import DynamicHeader from "@/components/DynamicHeader/DynamicHeader";
 
 const Layout = ({ children }) => {
   return (
