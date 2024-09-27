@@ -1,6 +1,6 @@
 "use client";
 
-import { FaUserCircle, FaImage, FaExchangeAlt } from "react-icons/fa";
+import { FaUserCircle, FaImage, FaExchangeAlt, FaList } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import {
   Card,
@@ -15,12 +15,14 @@ import Image from "next/image";
 const MyProfile = () => {
   const [user, setUser] = useState(null);
   const [items, setItems] = useState([]);
+  const [barters, setBarters] = useState([]);
   const pathName = usePathname();
 
   useEffect(() => {
     const id = pathName.split("/").pop();
     findUserById(id);
     fetchUserItems(id);
+    fetchUserBarters(id);
   }, [pathName]);
 
   const findUserById = async (id) => {
@@ -47,6 +49,17 @@ const MyProfile = () => {
       setItems(data);
     } catch (error) {
       console.error("Error fetching items:", error);
+    }
+  };
+
+  const fetchUserBarters = async (userId) => {
+    try {
+      const response = await fetch(`/api/incoming-bartersById?userId=${userId}`);
+      if (!response.ok) throw new Error("Failed to fetch barters");
+      const data = await response.json();
+      setBarters(data);
+    } catch (error) {
+      console.error("Error fetching barters:", error);
     }
   };
 
@@ -107,7 +120,7 @@ const MyProfile = () => {
           <Card className="bg-gray-800 text-white shadow-xl rounded-lg overflow-hidden col-span-2">
             <CardHeader className="bg-gradient-to-r from-green-600 to-teal-600 p-6">
               <CardTitle className="text-2xl font-semibold flex items-center">
-                <FaImage className="mr-2" /> My Items
+                <FaImage className="mr-2" /> User's Items
               </CardTitle>
               <CardDescription className="text-gray-200">
                 Items you have listed
@@ -178,6 +191,48 @@ const MyProfile = () => {
             </CardContent>
           </Card>
         </div>
+
+        <Card className="bg-gray-800 text-white shadow-xl rounded-lg overflow-hidden mb-8">
+          <CardHeader className="bg-gradient-to-r from-blue-600 to-indigo-600 p-6">
+            <CardTitle className="text-2xl font-semibold flex items-center">
+              <FaList className="mr-2" /> User's Listings
+            </CardTitle>
+            <CardDescription className="text-gray-200">
+              Your active barter listings
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="p-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {barters.map((barter) => (
+                <Card
+                  key={barter.id}
+                  className="bg-gray-700 text-white cursor-pointer hover:shadow-xl transition duration-300 transform hover:-translate-y-1"
+                >
+                  <CardHeader className="p-4">
+                    <CardTitle className="text-lg">{barter.item.name}</CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-4">
+                    <div className="h-40 bg-gray-600 flex items-center justify-center mb-4 rounded-md overflow-hidden">
+                      {barter.item.image ? (
+                        <Image
+                          width={400}
+                          height={400}
+                          src={barter.item.image}
+                          alt={barter.item.name}
+                          className="h-full w-full object-cover"
+                        />
+                      ) : (
+                        <FaImage className="text-4xl text-gray-400" />
+                      )}
+                    </div>
+                    <p className="text-gray-300 text-sm mb-2">{barter.item?.description || 'No description available'}</p>
+                    <p className="text-gray-300 text-sm">Offers: {barter.offers?.length || 0}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
       </main>
     </div>
   );
