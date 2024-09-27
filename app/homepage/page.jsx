@@ -139,13 +139,6 @@ const Homepage = () => {
       <main className="container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-semibold">Available Barters</h2>
-          <Button
-            onClick={handleCreateClick}
-            className="bg-black text-white hover:bg-white hover:text-black"
-          >
-            <FaPlus className="mr-2" />
-            Create
-          </Button>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {barters.map((barter) => (
