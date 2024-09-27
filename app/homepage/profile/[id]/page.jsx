@@ -41,7 +41,7 @@ const MyProfile = () => {
 
   const fetchUserItems = async (userId) => {
     try {
-      const response = await fetch(`/api/items?userId=${userId}`);
+      const response = await fetch(`/api/findItemsById?userId=${userId}`);
       if (!response.ok) throw new Error("Failed to fetch items");
       const data = await response.json();
       setItems(data);
