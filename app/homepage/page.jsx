@@ -1,12 +1,10 @@
 "use client";
 
-import React, {useState, useEffect} from "react";
+import {useState, useEffect} from "react";
 
 import BarterCard from "@/components/BarterCard/BarterCard";
 import BarterDialog from "@/components/BarterDialog/BarterDialog";
 import CreateTradeDialog from "@/components/CreateTradeDialog/CreateTradeDialog";
-import {Button} from "@/components/ui/button";
-import {FaPlus} from "react-icons/fa";
 
 const Homepage = () => {
     const [selectedBarter, setSelectedBarter] = useState(null);
@@ -91,23 +89,6 @@ const Homepage = () => {
         }
     };
 
-<<<<<<< HEAD
-  return (
-    <div className="bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen text-white">
-      <main className="container mx-auto px-4 py-8">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-semibold">Available Barters</h2>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {barters.map((barter) => (
-            <BarterCard
-              key={barter.barterId}
-              barter={barter}
-              onClick={handleBarterClick}
-=======
-    const handleCreateClick = () => {
-        setIsCreateDialogOpen(true);
-    };
 
     const handleCreateClose = () => {
         setIsCreateDialogOpen(false);
@@ -125,7 +106,6 @@ const Homepage = () => {
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-        console.log(e)
         try {
             const response = await fetch("/api/create-barter", {
                 method: "POST",
@@ -151,13 +131,6 @@ const Homepage = () => {
             <main className="container mx-auto px-4 py-8">
                 <div className="flex justify-between items-center mb-6">
                     <h2 className="text-2xl font-semibold">Available Barters</h2>
-                    <Button
-                        onClick={handleCreateClick}
-                        className="bg-black text-white hover:bg-white hover:text-black"
-                    >
-                        <FaPlus className="mr-2"/>
-                        Create
-                    </Button>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {barters.map((barter) => (
@@ -186,7 +159,6 @@ const Homepage = () => {
                 handleInputChange={handleInputChange}
                 handleFormSubmit={handleFormSubmit}
                 items={items}
->>>>>>> 1e8f21c8b29f23daede823dd3200f79977fdb58e
             />
         </div>
     );
