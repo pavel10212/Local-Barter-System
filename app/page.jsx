@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import Image from "next/image"; // Import the Image component from Next.js
+import Image from "next/image";
 
 const LandingPage = () => {
   return (
@@ -8,10 +8,10 @@ const LandingPage = () => {
       <header className="w-full flex justify-between items-center p-4 bg-gray-800">
         <div className="flex items-center">
           <Image
-            src="/barterlogo.png" // Replace with the path to your logo
+            src="/barterlogo.png"
             alt="Barter System Logo"
-            width={50} // Adjust the width as needed
-            height={50} // Adjust the height as needed
+            width={50}
+            height={50}
           />
           <span className="text-2xl font-bold text-white ml-2">
             Barter System
