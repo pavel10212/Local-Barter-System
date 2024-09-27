@@ -15,67 +15,78 @@ const TradeDialog = ({
   handleDecline,
 }) => {
   const isIncomingTrade = trade.barterOwner.userId === session.user.id;
+  console.log(trade.offers);
+
+  const renderItem = (item, title) => (
+    <div className="mt-4">
+      <p className="text-lg text-gray-300">{title}</p>
+      <div className="flex flex-col md:flex-row items-center mt-4">
+        <Image
+          width={300}
+          height={300}
+          src={item?.image || "/favicon.ico"}
+          alt={item?.name}
+          className="object-cover rounded-md mr-6 mb-4 md:mb-0"
+        />
+        <div>
+          <p className="font-semibold text-xl">{item?.name}</p>
+          <p className="text-base text-gray-400">{item?.description}</p>
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <Dialog open={true} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px] bg-gray-800 text-white max-h-[80vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[700px] bg-gray-800 text-white max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Trade Details</DialogTitle>
+          <DialogTitle className="text-2xl">Trade Details</DialogTitle>
         </DialogHeader>
-        <div className="mt-2">
-          <p className="text-sm text-gray-300">
-            {isIncomingTrade ? "Your item:" : "Item you want:"}
-          </p>
-          <div className="flex items-center mt-2">
-            <Image
-              width={150}
-              height={300}
-              src={trade.item?.image || "/favicon.ico"}
-              alt={trade.item?.name}
-              className="w-15 h-15 object-cover rounded-md mr-4"
-            />
-            <div>
-              <p className="font-semibold">{trade.item?.name}</p>
-              <p className="text-sm text-gray-400">{trade.item?.description}</p>
-            </div>
-          </div>
-        </div>
+
+        {isIncomingTrade ? (
+          renderItem(trade.item, "Your item:")
+        ) : (
+          <>
+            {renderItem(trade.item, "Item you want:")}
+            {renderItem(trade.offers[0]?.item, "Item you offered:")}
+          </>
+        )}
 
         {isIncomingTrade && (
-          <div className="mt-4">
-            <p className="text-sm text-gray-300">Offers:</p>
+          <div className="mt-8">
+            <p className="text-lg text-gray-300">Offers:</p>
             {trade.offers.map((offer) => (
               <div
                 key={offer.offerId}
-                className="mt-2 border-t border-gray-700 pt-2"
+                className="mt-6 border-t border-gray-700 pt-4"
               >
-                <div className="flex items-center">
+                <div className="flex flex-col md:flex-row items-center">
                   <Image
-                    width={60}
-                    height={60}
+                    width={300}
+                    height={300}
                     src={offer.item?.image || "/favicon.ico"}
                     alt={offer.item?.name}
-                    className="w-15 h-15 object-cover rounded-md mr-4"
+                    className="object-cover rounded-md mr-6 mb-4 md:mb-0"
                   />
                   <div>
-                    <p className="font-semibold">{offer.item?.name}</p>
-                    <p className="text-sm text-gray-400">
+                    <p className="font-semibold text-xl">{offer.item?.name}</p>
+                    <p className="text-base text-gray-400">
                       {offer.item?.description}
                     </p>
-                    <p className="text-sm text-gray-400">
+                    <p className="text-base text-gray-400 mt-2">
                       Status: {offer.status}
                     </p>
 
-                    <div className="mt-2">
+                    <div className="mt-4">
                       <Button
                         onClick={() => handleAccept(offer.offerId)}
-                        className="bg-green-500 hover:bg-green-600 text-white mr-2"
+                        className="bg-green-500 hover:bg-green-600 text-white mr-4 px-6 py-2 text-lg"
                       >
                         Accept
                       </Button>
                       <Button
                         onClick={() => handleDecline(offer.offerId)}
-                        className="bg-red-500 hover:bg-red-600 text-white"
+                        className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 text-lg"
                       >
                         Decline
                       </Button>
