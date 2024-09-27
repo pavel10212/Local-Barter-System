@@ -7,16 +7,16 @@ export async function GET(request) {
     const status = searchParams.get('status');
 
     let statusCondition = {};
-    if (status === 'open') {
+    if (status === 'CLOSED') {
         statusCondition = {
             status: {
-                in: ['open', 'offer-received']
+                in: ['CLOSED']
             }
         };
     }
 
     // Fetch barters for the specified userId
-    const incomingBartersById = await prisma.barter.findMany({
+    const closebBartersById = await prisma.barter.findMany({
         where: {
             userId: userId,
             ...statusCondition
@@ -33,8 +33,8 @@ export async function GET(request) {
         }
     });
 
-    console.log("1Fetching barters for userId:", userId, "with status condition:", statusCondition);
-    console.log("1Fetched barters:", incomingBartersById);
+    console.log("2Fetching barters for userId:", userId, "with status condition:", statusCondition);
+    console.log("2Fetched barters:", closebBartersById);
 
-    return NextResponse.json(incomingBartersById);
+    return NextResponse.json(closebBartersById);
 }
