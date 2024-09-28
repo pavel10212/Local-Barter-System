@@ -95,7 +95,7 @@ const TradeDialog = ({
                                 <CardHeader>
                                     <CardTitle
                                         className="text-xl font-semibold text-gray-100 flex items-center justify-between">
-                                        Offer from {offer.offerOwner?.firstName}
+                                        Offer from {offer.offerCreator?.firstName} {offer.offerCreator?.lastName}
                                         <Badge variant="secondary">{offer.status}</Badge>
                                     </CardTitle>
                                 </CardHeader>

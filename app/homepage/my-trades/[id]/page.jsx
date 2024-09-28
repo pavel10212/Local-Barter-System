@@ -176,6 +176,8 @@ const MyTrades = () => {
                 const errorData = await response.json();
                 console.error(`Failed to ${action} barter:`, errorData.error);
             }
+            handleClose()
+            toast.success(`Barter ${action}ed successfully`);
         } catch (error) {
             console.error(`Error ${action}ing barter:`, error);
         }
