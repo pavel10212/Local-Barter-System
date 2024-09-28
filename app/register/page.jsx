@@ -110,7 +110,7 @@ const RegisterPage = () => {
                 required
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
-                className="block w-full rounded-md border-0 py-1.5 text-white bg-gray-800 shadow-sm ring-1 ring-inset ring-gray-700 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 py-1.5 text-white bg-gray-800 shadow-sm ring-1 ring-inset ring-gray-700 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-cyan-400 sm:text-sm sm:leading-6"
               />
             </div>
             {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
@@ -131,7 +131,7 @@ const RegisterPage = () => {
                 required
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
-                className="block w-full rounded-md border-0 py-1.5 text-white bg-gray-800 shadow-sm ring-1 ring-inset ring-gray-700 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 py-1.5 text-white bg-gray-800 shadow-sm ring-1 ring-inset ring-gray-700 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-cyan-400 sm:text-sm sm:leading-6"
               />
             </div>
             {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
@@ -153,7 +153,7 @@ const RegisterPage = () => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="block w-full rounded-md border-0 py-1.5 text-white bg-gray-800 shadow-sm ring-1 ring-inset ring-gray-700 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 py-1.5 text-white bg-gray-800 shadow-sm ring-1 ring-inset ring-gray-700 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-cyan-400 sm:text-sm sm:leading-6"
               />
             </div>
             {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
@@ -175,7 +175,7 @@ const RegisterPage = () => {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="block w-full rounded-md border-0 py-1.5 text-white bg-gray-800 shadow-sm ring-1 ring-inset ring-gray-700 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 py-1.5 text-white bg-gray-800 shadow-sm ring-1 ring-inset ring-gray-700 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-cyan-400 sm:text-sm sm:leading-6"
               />
             </div>
             {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
@@ -197,7 +197,7 @@ const RegisterPage = () => {
                 required
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="block w-full rounded-md border-0 py-1.5 text-white bg-gray-800 shadow-sm ring-1 ring-inset ring-gray-700 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 py-1.5 text-white bg-gray-800 shadow-sm ring-1 ring-inset ring-gray-700 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-cyan-400 sm:text-sm sm:leading-6"
               />
             </div>
             {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
@@ -218,7 +218,7 @@ const RegisterPage = () => {
                 required
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
-                className="block w-full rounded-md border-0 py-1.5 text-white bg-gray-800 shadow-sm ring-1 ring-inset ring-gray-700 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 py-1.5 text-white bg-gray-800 shadow-sm ring-1 ring-inset ring-gray-700 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-cyan-400 sm:text-sm sm:leading-6"
               />
             </div>
             {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
@@ -239,7 +239,7 @@ const RegisterPage = () => {
                 required
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
-                className="block w-full rounded-md border-0 py-1.5 text-white bg-gray-800 shadow-sm ring-1 ring-inset ring-gray-700 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 py-1.5 text-white bg-gray-800 shadow-sm ring-1 ring-inset ring-gray-700 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-cyan-400 sm:text-sm sm:leading-6"
               />
             </div>
             {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
@@ -248,7 +248,7 @@ const RegisterPage = () => {
           <div>
             <button
               type="submit"
-              className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className="group relative w-full flex justify-center py-2 px-4 border border-black text-sm font-medium rounded-md text-black bg-white hover:bg-black hover:text-white transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
             >
               Sign up
             </button>
@@ -259,7 +259,7 @@ const RegisterPage = () => {
           Already have an account?
           <a
             href="/login"
-            className="font-semibold leading-6 text-indigo-400 hover:text-indigo-300"
+            className="font-medium text-cyan-400 hover:text-cyan-300"
           >
             {" "}
             Sign in
