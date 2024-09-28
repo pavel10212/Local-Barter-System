@@ -12,7 +12,8 @@ export async function GET() {
                     userId: {
                         not: session.user.id
                     }
-                }
+                },
+                status: "OPEN"
             },
             include: {
                 barterOwner: true,
