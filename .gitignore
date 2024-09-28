@@ -38,4 +38,6 @@ next-env.d.ts
 # JetBrains
 .idea/
 
-.vercel
+# env
+.env
+.env./*
