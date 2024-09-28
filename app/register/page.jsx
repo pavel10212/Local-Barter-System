@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import LoadingWrapper from "@/components/loadingwrapper/loadingwrapper";
+import LoadingWrapper from "@/components/LoadingWrapper/LoadingWrapper"
 import { toast } from "sonner";
 import { getSession } from "next-auth/react";
 import Image from "next/image";
