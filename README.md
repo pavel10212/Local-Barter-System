@@ -30,7 +30,7 @@ Join our community to start trading items and services without the need for mone
 - Secure login and registration system
 - Personalized user profiles
 - Create and manage listings for items and services
-- Browse and search for available trades
+- Browse for available trades
 - Make and receive offers on listings
 - Manage your inventory of items for trade
 - Track your trade history and current transactions
