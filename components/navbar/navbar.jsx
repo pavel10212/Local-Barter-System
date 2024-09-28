@@ -58,9 +58,6 @@ const Navbar = () => {
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="bg-white rounded-md shadow-lg w-56 p-2 mt-2">
-                <DropdownMenuLabel className="text-lg font-semibold">
-                  {session?.user?.name}
-                </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
                   <Link
