@@ -1,36 +1,22 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Barter System
 
-## Getting Started
+- [Link to Repository](https://github.com/pavel10212/Local-Barter-System)
+- [Link to website](https://local-barter-system.vercel.app/)
 
-First, run the development server:
+## Contributors
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- [Pavel Ponomarev](https://github.com/pavel10212)
+- [Noe Kieffer](https://github.com/NoeNeoK)
+- [Kris Ambrosini](https://github.com/kris6430187)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Project Description
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+This is a bartering app where you can exchange goods and services with others. Join our community to start trading items and services without the need for money. Discover a new way to get what you need while offering what you have.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Screenshots
 
-## Learn More
+![Landing Page](/public/landingpage.png)
 
-To learn more about Next.js, take a look at the following resources:
+![Login Page](/public/login.png)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+![Register Page](/public/register.png)
