@@ -16,6 +16,7 @@ import {Plus, Trash2, Image as ImageIcon, X} from "lucide-react";
 import Image from "next/image";
 import {useSession} from "next-auth/react";
 import LoadingWrapper from "@/components/LoadingWrapper/LoadingWrapper";
+import {toast} from "sonner"
 
 const MyItems = () => {
     const [items, setItems] = useState([]);
@@ -82,6 +83,7 @@ const MyItems = () => {
                 setBlob(newBlob);
                 setPreviewImage(URL.createObjectURL(file));
                 setNewItem((prev) => ({...prev, image: newBlob.url}));
+                toast.success("Image uploaded successfully");
             } catch (error) {
                 console.error("Error uploading image:", error);
             } finally {
@@ -114,6 +116,7 @@ const MyItems = () => {
                     : [...prev, updatedItem]
             );
             handleDialogClose();
+            toast.success("Item saved successfully");
         } catch (error) {
             console.error(error);
         } finally {
@@ -123,20 +126,19 @@ const MyItems = () => {
 
     const handleItemDelete = async (item) => {
         try {
-            const response = await fetch("/api/deleteItem", {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({id: item.itemId}),
-            });
+            const response = await fetch(`/api/deleteItem?itemId=${item.itemId}`, {
+                method: "DELETE",
+            })
             if (!response.ok) throw new Error("Failed to delete item");
             setItems((prev) => prev.filter((i) => i.itemId !== item.itemId));
             handleDialogClose();
+            toast.success("Item deleted successfully");
         } catch (error) {
             console.error(error);
         }
     };
 
-    if (loading) return <LoadingWrapper />
+    if (loading) return <LoadingWrapper/>
 
 
     return (

@@ -56,7 +56,7 @@ const TradeItem = ({trade, onClick, isMyOffer}) => {
                         <Image
                             width={24}
                             height={24}
-                            src={owner?.profileImageId || "/favicon.ico"}
+                            src={owner?.profilePictureUrl || "/favicon.ico"}
                             alt={owner?.firstName}
                             className="w-6 h-6 rounded-full mr-2"
                         />

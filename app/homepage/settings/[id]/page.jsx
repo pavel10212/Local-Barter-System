@@ -11,9 +11,11 @@ import {
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
 import {Button} from "@/components/ui/button";
-import {Save, User, Mail, MapPin, Phone} from "lucide-react";
+import {Save, User, Mail, MapPin, Phone, Image as ImageIcon, X, Camera} from "lucide-react";
 import {toast} from "sonner"
 import LoadingWrapper from "@/components/LoadingWrapper/LoadingWrapper";
+import {useSession} from "next-auth/react";
+import Image from "next/image";
 
 const SettingsPage = () => {
     const [firstName, setFirstName] = useState("");
@@ -22,6 +24,10 @@ const SettingsPage = () => {
     const [address, setAddress] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [profilePicture, setProfilePicture] = useState(null);
+    const [previewUrl, setPreviewUrl] = useState("");
+    const [blob, setBlob] = useState(null);
+    const {data: session} = useSession();
 
     useEffect(() => {
         getUserData();
@@ -37,6 +43,7 @@ const SettingsPage = () => {
             setEmail(data.email);
             setAddress(data.address);
             setPhoneNumber(data.phoneNumber);
+            setPreviewUrl(data.profilePictureUrl || "")
         } catch (error) {
             console.error(error);
         } finally {
@@ -45,11 +52,17 @@ const SettingsPage = () => {
     };
 
     const handleSubmit = async (e) => {
-        setIsLoading(true);
         e.preventDefault();
+        setIsLoading(true);
         try {
+            let profilePictureUrl = previewUrl;
+
+            if (blob) {
+                profilePictureUrl = blob.url;
+            }
+
             const response = await fetch("/api/updateUser", {
-                method: "POST",
+                method: "PUT",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
                     firstName,
@@ -57,19 +70,45 @@ const SettingsPage = () => {
                     email,
                     address,
                     phoneNumber,
+                    profilePictureUrl,
                 }),
             });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Failed to update profile');
+            }
+
             const data = await response.json();
-            if (data.error) {
-                toast.error(data.error);
-            }
-            if (data.success) {
-                toast.success("Profile updated successfully");
-            }
+            toast.success("Profile updated successfully");
         } catch (error) {
             console.error(error);
+            toast.error(error.message || "An error occurred while updating the profile");
         } finally {
             setIsLoading(false);
+        }
+    };
+
+    const handleImageChange = async (e) => {
+        setIsLoading(true);
+        const file = e.target.files[0];
+        if (file) {
+            try {
+                const filename = `${session?.user?.id}/${Date.now()}_${file.name}`;
+                const response = await fetch(`/api/upload?filename=${filename}`, {
+                    method: "POST",
+                    body: file,
+                });
+                const newBlob = await response.json();
+                setBlob(newBlob);
+                setPreviewUrl(URL.createObjectURL(file));
+                toast.success("Image uploaded successfully");
+            } catch (error) {
+                console.error("Error uploading image:", error);
+                toast.error("Failed to upload image");
+            } finally {
+                setIsLoading(false);
+            }
         }
     };
 
@@ -90,6 +129,61 @@ const SettingsPage = () => {
                     </CardHeader>
                     <CardContent className="p-6">
                         <form className="space-y-6" onSubmit={handleSubmit}>
+                            <div className="space-y-4">
+                                <Label htmlFor="profile-picture"
+                                       className="text-gray-300 flex items-center text-lg font-semibold">
+                                    <ImageIcon className="mr-2 h-5 w-5"/>
+                                    Profile Picture
+                                </Label>
+                                <div className="flex flex-col items-center space-y-4">
+                                    <div
+                                        className="relative w-40 h-40 rounded-full overflow-hidden bg-gray-700 flex items-center justify-center">
+                                        {previewUrl ? (
+                                            <Image
+                                                src={previewUrl}
+                                                alt="Profile Preview"
+                                                layout="fill"
+                                                objectFit="cover"
+                                            />
+                                        ) : (
+                                            <User className="h-20 w-20 text-gray-400"/>
+                                        )}
+                                        <label htmlFor="profile-picture"
+                                               className="absolute inset-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center cursor-pointer opacity-0 hover:opacity-100 transition-opacity duration-300">
+                                            <Camera className="h-8 w-8 text-white"/>
+                                        </label>
+                                    </div>
+                                    <Input
+                                        id="profile-picture"
+                                        name="profile-picture"
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={handleImageChange}
+                                        className="hidden"
+                                    />
+                                    <div className="flex space-x-2">
+                                        <Button
+                                            type="button"
+                                            onClick={() => document.getElementById("profile-picture").click()}
+                                            className="bg-indigo-600 hover:bg-indigo-700 text-white"
+                                        >
+                                            {previewUrl ? "Change Photo" : "Upload Photo"}
+                                        </Button>
+                                        {previewUrl && (
+                                            <Button
+                                                type="button"
+                                                onClick={() => {
+                                                    setPreviewUrl("");
+                                                    setBlob(null);
+                                                }}
+                                                className="bg-red-600 hover:bg-red-700 text-white"
+                                            >
+                                                Remove
+                                            </Button>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div className="space-y-2">
                                     <Label htmlFor="first-name" className="text-gray-300">

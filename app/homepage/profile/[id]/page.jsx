@@ -85,7 +85,7 @@ const MyProfile = () => {
         }
     };
 
-    if (isLoading) return <LoadingWrapper />
+    if (isLoading) return <LoadingWrapper/>
 
     return (
         <div className="bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen text-white">
@@ -93,8 +93,16 @@ const MyProfile = () => {
                 <Card className="bg-gray-800 border-gray-700 shadow-xl mb-8">
                     <CardHeader className="bg-gradient-to-r from-purple-600 to-indigo-600 p-8">
                         <div className="flex items-center">
-                            <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mr-6">
-                                <UserCircle size={80} className="text-gray-800"/>
+                            <div
+                                className="w-24 h-24 bg-gray-200 rounded-full overflow-hidden flex items-center justify-center mr-6">
+                                <Image
+                                    width={96}
+                                    height={96}
+                                    src={user?.profilePictureUrl || "/favicon.ico"}
+                                    alt={user?.firstName || "Profile picture"}
+                                    className="w-full h-full object-cover"
+                                    unoptimized
+                                />
                             </div>
                             <div>
                                 <CardTitle className="text-3xl font-bold mb-2 text-white">
