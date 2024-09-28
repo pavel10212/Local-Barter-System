@@ -15,4 +15,8 @@ This is a bartering app where you can exchange goods and services with others. J
 
 ## Screenshots
 
-(Include screenshots of the app here)
+![Landing Page](/public/landingpage.png)
+
+![Login Page](/public/login.png)
+
+![Register Page](/public/register.png)
