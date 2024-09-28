@@ -1,84 +1,91 @@
 import Image from "next/image";
-import {FaExchangeAlt, FaMapMarkerAlt, FaClock, FaTag} from "react-icons/fa";
+import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
+import {Badge} from "@/components/ui/badge";
+import {ArrowLeftRight, MapPin, Clock, Tag} from "lucide-react";
 
 const TradeItem = ({trade, onClick, isMyOffer}) => {
-    const item = isMyOffer ? trade.barter.item : trade.item;
-    const owner = isMyOffer ? trade.barter.barterOwner : trade.barterOwner;
+    const item = isMyOffer ? trade?.barter?.item : trade?.item;
+    const owner = isMyOffer ? trade?.barter?.barterOwner : trade?.barterOwner;
     const status = trade.status;
-    const itemSeeking = isMyOffer ? trade.item.name : trade.itemSeeking;
+    const itemSeeking = isMyOffer ? trade?.item?.name : trade?.itemSeeking;
 
     return (
-        <div
-            className={`rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-xl transition duration-300 transform hover:-translate-y-1 ${
-                status === "counter" ? "bg-yellow-600" : status === "accepted" ? "bg-green-600" : "bg-gray-700"
-            }`}
+        <Card
+            className="bg-gray-800 border-gray-700 hover:border-white transition-all duration-300 cursor-pointer"
             onClick={() => onClick(trade)}
         >
-            <div className="relative">
-                {isMyOffer ? (
-                    <div className="flex h-48">
+            <CardHeader>
+                <CardTitle className="text-xl font-semibold text-white flex items-center justify-between">
+                    {isMyOffer ? `${trade?.item?.name} ⇄ ${item?.name}` : item?.name}
+                    <Badge variant="secondary" className="ml-2">
+                        {status}
+                    </Badge>
+                </CardTitle>
+            </CardHeader>
+            <CardContent>
+                <div className="h-48 bg-gray-700 rounded-md flex items-center justify-center mb-4 overflow-hidden">
+                    {isMyOffer ? (
+                        <div className="flex w-full h-full">
+                            <Image
+                                width={500}
+                                height={500}
+                                src={trade.item.image || "/favicon.ico"}
+                                alt={trade.item.name}
+                                className="w-1/2 h-full object-cover"
+                            />
+                            <Image
+                                width={500}
+                                height={500}
+                                src={item?.image || "/favicon.ico"}
+                                alt={item?.name}
+                                className="w-1/2 h-full object-cover"
+                            />
+                        </div>
+                    ) : (
                         <Image
                             width={500}
                             height={500}
-                            src={trade.item.image || "/favicon.ico"}
-                            alt={trade.item.name}
-                            className="object-cover"
+                            src={item?.image || "/favicon.ico"}
+                            alt={item?.name}
+                            className="w-full h-full object-cover"
                         />
+                    )}
+                </div>
+                <div className="space-y-2">
+                    <div className="flex items-center text-gray-400 text-sm">
                         <Image
-                            width={500}
-                            height={500}
-                            src={item.image || "/favicon.ico"}
-                            alt={item.name}
-                            className="object-cover"
+                            width={24}
+                            height={24}
+                            src={owner?.profileImageId || "/favicon.ico"}
+                            alt={owner?.firstName}
+                            className="w-6 h-6 rounded-full mr-2"
                         />
+                        <span>{owner?.firstName} {owner?.lastName}</span>
                     </div>
-                ) : (
-                    <Image
-                        width={200}
-                        height={150}
-                        src={item.image || "/favicon.ico"}
-                        alt={item.name}
-                        className="w-full h-48 object-cover"
-                    />
-                )}
-                <div className="absolute top-2 right-2 bg-gray-800 text-white px-2 py-1 rounded-full text-xs">
-                    {status}
-                </div>
-            </div>
-            <div className="p-4">
-                <div className="flex items-center mb-2">
-                    <Image
-                        width={40}
-                        height={40}
-                        src={owner?.profileImageId || "/favicon.ico"}
-                        alt={owner?.firstName}
-                        className="w-8 h-8 rounded-full mr-2"
-                    />
-                    <span className="font-medium text-sm">{owner?.firstName} {owner?.lastName}</span>
-                </div>
-                <h3 className="text-xl font-semibold mb-2">{isMyOffer ? `${trade.item.name} ⇄ ${item.name}` : item.name}</h3>
-                <div className="flex items-center text-gray-300 text-sm mb-2">
-                    <FaTag className="mr-2"/>
-                    <span>{isMyOffer ? trade.item.description : item.description}</span>
-                </div>
-                {!isMyOffer && (
-                    <div className="flex items-center text-gray-300 text-sm mb-2">
-                        <FaExchangeAlt className="mr-2"/>
-                        <span className="font-semibold">Seeking: </span>
-                        {itemSeeking}
+                    <div className="flex items-center text-gray-400 text-sm">
+                        <Tag className="w-4 h-4 mr-2"/>
+                        <span>{isMyOffer ? trade.item.description : item.description}</span>
                     </div>
-                )}
-                <div className="flex items-center text-gray-300 text-sm mb-2">
-                    <FaMapMarkerAlt className="mr-2"/>
-                    <span className="font-semibold">Address: </span>
-                    {owner?.address || "Address not specified"}
+                    {!isMyOffer && (
+                        <div className="flex items-center text-gray-400 text-sm">
+                            <ArrowLeftRight className="w-4 h-4 mr-2"/>
+                            <span className="font-semibold">Seeking: </span>
+                            <span className="ml-1">{itemSeeking}</span>
+                        </div>
+                    )}
+                    <div className="flex items-center text-gray-400 text-sm">
+                        <MapPin className="w-4 h-4 mr-2"/>
+                        <span className="font-semibold">Address: </span>
+                        <span className="ml-1">{owner?.address || "Not specified"}</span>
+                    </div>
+                    <div className="flex items-center text-gray-400 text-sm">
+                        <Clock className="w-4 h-4 mr-2"/>
+                        <span className="font-semibold">Status: </span>
+                        <span className="ml-1">{status}</span>
+                    </div>
                 </div>
-                <div className="flex items-center text-gray-300 text-sm">
-                    <FaClock className="mr-2"/>
-                    <span className="font-semibold">Status: </span> {status}
-                </div>
-            </div>
-        </div>
+            </CardContent>
+        </Card>
     );
 }
 

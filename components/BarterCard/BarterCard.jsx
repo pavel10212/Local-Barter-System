@@ -1,28 +1,47 @@
 import React from "react";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
-import {FaImage} from "react-icons/fa";
+import {Badge} from "@/components/ui/badge";
 import Image from "next/image";
+import {ArrowLeftRight, MapPin, Tag} from "lucide-react";
 
 const BarterCard = ({barter, onClick}) => (
     <Card
-        className="bg-gray-700 text-white cursor-pointer hover:shadow-xl transition duration-300 transform hover:-translate-y-1"
+        className="bg-gray-800 border-gray-700 hover:border-white transition-all duration-300 cursor-pointer"
         onClick={() => onClick(barter)}
     >
         <CardHeader>
-            <CardTitle>{barter?.item?.name}</CardTitle>
+            <CardTitle className="text-xl font-semibold text-white flex items-center justify-between">
+                {barter?.item?.name}
+                <Badge variant="secondary">{barter?.status || "Available"}</Badge>
+            </CardTitle>
         </CardHeader>
         <CardContent>
-            <div className="h-48 bg-gray-600 flex items-center justify-center mb-4">
+            <div className="h-48 bg-gray-700 rounded-md flex items-center justify-center mb-4 overflow-hidden">
                 <Image
-                    width={150}
-                    height={150}
+                    width={400}
+                    height={400}
                     src={barter?.item?.image || "/favicon.ico"}
                     alt={barter?.item?.name}
-                    className="h-full w-full object-cover"
+                    className="w-full h-full object-cover"
                 />
             </div>
-            <p className="text-gray-400 mb-2">{barter?.item?.description}</p>
-            <p className="text-sm">Seeking: {barter?.itemSeeking}</p>
+            <div className="space-y-2">
+                <div className="flex items-center text-gray-400 text-sm">
+                    <Tag className="w-4 h-4 mr-2"/>
+                    <span>{barter?.item?.description}</span>
+                </div>
+                <div className="flex items-center text-gray-400 text-sm">
+                    <ArrowLeftRight className="w-4 h-4 mr-2"/>
+                    <span className="font-semibold">Seeking: </span>
+                    <span className="ml-1">{barter?.itemSeeking}</span>
+                </div>
+                {barter?.barterOwner?.address && (
+                    <div className="flex items-center text-gray-400 text-sm">
+                        <MapPin className="w-4 h-4 mr-2"/>
+                        <span>{barter.barterOwner.address}</span>
+                    </div>
+                )}
+            </div>
         </CardContent>
     </Card>
 );

@@ -1,128 +1,144 @@
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+import {Button} from "@/components/ui/button";
+import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
+import {Badge} from "@/components/ui/badge";
+import {Separator} from "@/components/ui/separator";
 import Image from "next/image";
-import { Trash2 } from "lucide-react";
+import {Trash2, Check, X, ArrowLeftRight} from "lucide-react";
 
 const TradeDialog = ({
-  trade,
-  onClose,
-  session,
-  handleAccept,
-  handleDecline,
-  isMyOffer,
-}) => {
-  const renderItem = (item, title, showDeleteButton) => (
-    <div className="mt-4">
-      <p className="text-lg text-gray-300">{title}</p>
-      <div className="flex flex-col md:flex-row items-center mt-4">
-        <Image
-          width={300}
-          height={300}
-          src={item?.image || "/favicon.ico"}
-          alt={item?.name}
-          className="object-cover rounded-md mr-6 mb-4 md:mb-0"
-        />
-        <div>
-          <p className="font-semibold text-xl">{item?.name}</p>
-          <p className="text-base text-gray-400">{item?.description}</p>
-          {!isMyOffer && (
-            <Button
-              variant="destructive"
-              size=""
-              className="flex items-center space-x-1 mt-2"
-              onClick={() => {}}
-            >
-              Delete listing
-            </Button>
-          )}
-          {showDeleteButton && (
-            <Button
-              variant="destructive"
-              size=""
-              className="flex items-center space-x-1 mt-2"
-              onClick={() => {}}
-            >
-              Delete offer
-            </Button>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-
-  return (
-    <Dialog open={true} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[700px] bg-gray-800 text-white max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="text-2xl">Trade Details</DialogTitle>
-        </DialogHeader>
-
-        {isMyOffer ? (
-          <>
-            {renderItem(trade.barter.item, "Item you want:", false)}
-            {renderItem(trade.item, "Item you offer:", true)}
-            <p className="text-base text-gray-400 mt-4">
-              Status: {trade.status}
-            </p>
-          </>
-        ) : (
-          <>
-            {renderItem(trade.item, "Your item:", false)}
-            <div className="mt-8">
-              <p className="text-lg text-gray-300">Offers:</p>
-              {trade.offers.map((offer) => (
-                <div
-                  key={offer.offerId}
-                  className="mt-6 border-t border-gray-700 pt-4"
-                >
-                  <div className="flex flex-col md:flex-row items-center">
-                    <Image
-                      width={300}
-                      height={300}
-                      src={offer.item?.image || "/favicon.ico"}
-                      alt={offer.item?.name}
-                      className="object-cover rounded-md mr-6 mb-4 md:mb-0"
-                    />
-                    <div>
-                      <p className="font-semibold text-xl">
-                        {offer.item?.name}
-                      </p>
-                      <p className="text-base text-gray-400">
-                        {offer.item?.description}
-                      </p>
-                      <p className="text-base text-gray-400 mt-2">
-                        Status: {offer.status}
-                      </p>
-
-                      <div className="mt-4">
-                        <Button
-                          onClick={() => handleAccept(offer.offerId)}
-                          className="bg-green-500 hover:bg-green-600 text-white mr-4 px-6 py-2 text-lg"
-                        >
-                          Accept
-                        </Button>
-                        <Button
-                          onClick={() => handleDecline(offer.offerId)}
-                          className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 text-lg"
-                        >
-                          Decline
-                        </Button>
-                      </div>
+                         trade,
+                         onClose,
+                         handleAccept,
+                         handleDeleteOffer,
+                         handleDeleteListing,
+                         handleDecline,
+                         isMyOffer,
+                     }) => {
+    const renderItem = (item, title, showDeleteButton, offerId) => (
+        <Card className="mt-4 bg-gray-800 border-gray-700 shadow-lg">
+            <CardHeader>
+                <CardTitle className="text-xl font-semibold text-gray-100 flex items-center justify-between">
+                    {title}
+                    <Badge variant="secondary">{item?.status || trade.status}</Badge>
+                </CardTitle>
+            </CardHeader>
+            <CardContent className="p-6">
+                <div className="flex flex-col md:flex-row items-start gap-6">
+                    <div className="w-full md:w-1/2 rounded-lg overflow-hidden">
+                        <Image
+                            width={400}
+                            height={400}
+                            src={item?.image || "/favicon.ico"}
+                            alt={item?.name}
+                            className="w-full h-auto object-contain"
+                        />
                     </div>
-                  </div>
+                    <div className="flex-1 space-y-4">
+                        <h4 className="font-semibold text-lg text-gray-200">{item?.name}</h4>
+                        <p className="text-sm text-gray-400">{item?.description}</p>
+                        {!isMyOffer && showDeleteButton && (
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                className="text-red-400 border-red-400 hover:bg-red-400 hover:text-white transition-colors"
+                                onClick={() => handleDeleteListing(trade.barterId)}
+                            >
+                                <Trash2 className="w-4 h-4 mr-2"/>
+                                Delete listing
+                            </Button>
+                        )}
+                        {isMyOffer && showDeleteButton && (
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                className="text-red-400 border-red-400 hover:bg-red-400 hover:text-white transition-colors"
+                                onClick={() => handleDeleteOffer(offerId)}
+                            >
+                                <Trash2 className="w-4 h-4 mr-2"/>
+                                Delete offer
+                            </Button>
+                        )}
+                    </div>
                 </div>
-              ))}
-            </div>
-          </>
-        )}
-      </DialogContent>
-    </Dialog>
-  );
+            </CardContent>
+        </Card>
+    );
+
+    return (
+        <Dialog open={true} onOpenChange={onClose}>
+            <DialogContent className="sm:max-w-[700px] bg-gray-900 text-gray-100 max-h-[90vh] overflow-y-auto">
+                <DialogHeader>
+                    <DialogTitle className="text-2xl font-bold text-gray-100 flex items-center">
+                        <ArrowLeftRight className="mr-2"/>
+                        Trade Details
+                    </DialogTitle>
+                </DialogHeader>
+
+                {isMyOffer ? (
+                    <>
+                        {renderItem(trade.barter.item, "Item you want", false)}
+                        {renderItem(trade.item, "Item you offer", true, trade.offerId)}
+                    </>
+                ) : (
+                    <>
+                        {renderItem(trade.item, "Your item", true)}
+                        <Separator className="my-8 bg-gray-700"/>
+                        <h2 className="text-xl font-semibold text-gray-200 mb-6">Offers:</h2>
+                        {trade.offers.map((offer) => (
+                            <Card key={offer.offerId} className="mt-6 bg-gray-800 border-gray-700 shadow-lg">
+                                <CardHeader>
+                                    <CardTitle
+                                        className="text-xl font-semibold text-gray-100 flex items-center justify-between">
+                                        Offer from {offer.offerOwner?.firstName}
+                                        <Badge variant="secondary">{offer.status}</Badge>
+                                    </CardTitle>
+                                </CardHeader>
+                                <CardContent className="p-6">
+                                    <div className="flex flex-col md:flex-row items-start gap-6">
+                                        <div className="w-full md:w-1/2 rounded-lg overflow-hidden">
+                                            <Image
+                                                width={400}
+                                                height={400}
+                                                src={offer.item?.image || "/favicon.ico"}
+                                                alt={offer.item?.name}
+                                                className="w-full h-auto object-contain"
+                                            />
+                                        </div>
+                                        <div className="flex-1 space-y-4">
+                                            <h3 className="font-semibold text-lg text-gray-200">{offer.item?.name}</h3>
+                                            <p className="text-sm text-gray-400">{offer.item?.description}</p>
+                                            <div className="flex gap-4">
+                                                <Button
+                                                    onClick={() => handleAccept(offer.offerId)}
+                                                    className="bg-green-600 hover:bg-green-700 text-white flex-1 transition-colors"
+                                                >
+                                                    <Check className="w-4 h-4 mr-2"/>
+                                                    Accept
+                                                </Button>
+                                                <Button
+                                                    onClick={() => handleDecline(offer.offerId)}
+                                                    className="bg-red-600 hover:bg-red-700 text-white flex-1 transition-colors"
+                                                >
+                                                    <X className="w-4 h-4 mr-2"/>
+                                                    Decline
+                                                </Button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        ))}
+                    </>
+                )}
+            </DialogContent>
+        </Dialog>
+    );
 };
 
 export default TradeDialog;

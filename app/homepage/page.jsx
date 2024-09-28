@@ -5,6 +5,7 @@ import {useState, useEffect} from "react";
 import BarterCard from "@/components/BarterCard/BarterCard";
 import BarterDialog from "@/components/BarterDialog/BarterDialog";
 import CreateTradeDialog from "@/components/CreateTradeDialog/CreateTradeDialog";
+import LoadingWrapper from "@/components/LoadingWrapper/LoadingWrapper";
 
 const Homepage = () => {
     const [selectedBarter, setSelectedBarter] = useState(null);
@@ -17,6 +18,7 @@ const Homepage = () => {
     });
     const [barters, setBarters] = useState([]);
     const [offerItem, setOfferItem] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         fetchBarters();
@@ -24,16 +26,20 @@ const Homepage = () => {
     }, []);
 
     const fetchBarters = async () => {
+        setIsLoading(true);
         try {
             const response = await fetch("/api/barters");
             const data = await response.json();
             setBarters(data);
         } catch (error) {
             console.error("Error fetching barters:", error);
+        } finally {
+            setIsLoading(false);
         }
     };
 
     const fetchYourItems = async () => {
+        setIsLoading(true);
         try {
             const response = await fetch("/api/items", {
                 method: "GET",
@@ -45,6 +51,8 @@ const Homepage = () => {
             setItems(data);
         } catch (error) {
             console.error("Error fetching items:", error);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -89,22 +97,7 @@ const Homepage = () => {
         }
     };
 
-
-    const handleCreateClose = () => {
-        setIsCreateDialogOpen(false);
-        setNewTrade({
-            itemId: "",
-            itemSeeking: "",
-            description: "",
-        });
-    };
-
-    const handleInputChange = (e) => {
-        const {name, value} = e.target;
-        setNewTrade({...newTrade, [name]: value});
-    };
-
-
+    if (isLoading) return <LoadingWrapper />
 
     return (
         <div className="bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen text-white">
