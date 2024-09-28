@@ -79,7 +79,7 @@ const BarterDialog = ({
                             </label>
                             <div className="flex items-center">
                 <span className="text-sm text-gray-400 mr-2">
-                  Don't have one?
+                  Don&apos;t have one?
                 </span>
                                 <Button
                                     className="px-3 py-1 text-xs bg-blue-600 hover:bg-blue-500 transition duration-300 flex items-center"
