@@ -33,8 +33,5 @@ export async function GET(request) {
         }
     });
 
-    console.log("1Fetching barters for userId:", userId, "with status condition:", statusCondition);
-    console.log("1Fetched barters:", incomingBartersById);
-
     return NextResponse.json(incomingBartersById);
 }

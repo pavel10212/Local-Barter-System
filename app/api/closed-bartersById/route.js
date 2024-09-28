@@ -15,8 +15,7 @@ export async function GET(request) {
         };
     }
 
-    // Fetch barters for the specified userId
-    const closebBartersById = await prisma.barter.findMany({
+    const closeBartersById = await prisma.barter.findMany({
         where: {
             userId: userId,
             ...statusCondition
@@ -33,8 +32,5 @@ export async function GET(request) {
         }
     });
 
-    console.log("2Fetching barters for userId:", userId, "with status condition:", statusCondition);
-    console.log("2Fetched barters:", closebBartersById);
-
-    return NextResponse.json(closebBartersById);
+    return NextResponse.json(closeBartersById);
 }

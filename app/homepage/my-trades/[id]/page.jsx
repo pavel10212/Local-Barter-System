@@ -43,7 +43,6 @@ const MyTrades = () => {
       const response = await fetch("/api/incoming-barters");
       const data = await response.json();
       setIncomingBarters(data);
-      console.log(incomingBarters, "incomingBarters");
     } catch (error) {
       console.error(error);
     }

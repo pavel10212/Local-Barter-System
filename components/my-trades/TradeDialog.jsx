@@ -15,7 +15,6 @@ const TradeDialog = ({
   handleDecline,
 }) => {
   const isIncomingTrade = trade.barterOwner.userId === session.user.id;
-  console.log(trade.offers);
 
   const renderItem = (item, title) => (
     <div className="mt-4">
