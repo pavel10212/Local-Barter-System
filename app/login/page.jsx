@@ -7,11 +7,12 @@ import LoadingWrapper from "@/components/navbar/loadingwrapper/loadingwrapper";
 import {toast} from "sonner";
 import {useSession} from "next-auth/react";
 import Image from "next/image";
+import Alert from "@/components/Login/Alert";
 
 const LoginPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [errors, setErrors] = useState({});
+    const [error, setError] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
     const router = useRouter();
     const {data: session} = useSession();
@@ -23,6 +24,7 @@ const LoginPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
+        setError("");
 
         try {
             const result = await signIn("credentials", {
@@ -31,15 +33,22 @@ const LoginPage = () => {
                 password,
             });
 
-            if (result.errors) {
-                console.error(result.errors);
-                setErrors({form: result.errors});
+            if (result.error) {
+                console.error(result.error);
+                if (result.error === "Configuration") {
+                    setError("Wrong email or password.");
+                } else {
+                    setError("An error occurred. Please try again later.");
+                }
+                setIsSubmitting(false);
             } else {
                 toast.success("Logged in successfully");
                 router.push("/homepage");
             }
         } catch (error) {
-            setErrors({form: "Invalid email or password"});
+            console.error(error);
+            setError("An unexpected error occurred. Please try again later.");
+            setIsSubmitting(false);
         }
     };
 
@@ -51,7 +60,9 @@ const LoginPage = () => {
         <div className="flex min-h-screen items-center justify-center bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-md w-full space-y-8">
                 <div>
-                    <Image width={40} height={40}
+                    <Image
+                        width={40}
+                        height={40}
                         className="mx-auto h-40 w-auto"
                         src="/barterlogo.png"
                         alt="Your Company"
@@ -60,6 +71,7 @@ const LoginPage = () => {
                         Sign in to your account
                     </h2>
                 </div>
+                {error && <Alert message={error}/>}
                 <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
                     <input type="hidden" name="remember" value="true"/>
                     <div className="rounded-md shadow-sm -space-y-px">
@@ -95,9 +107,6 @@ const LoginPage = () => {
                                 placeholder="Password"
                             />
                         </div>
-                        {errors.form && (
-                            <p className="text-red-500 text-sm mt-1">{errors.form}</p>
-                        )}
                     </div>
 
                     <div>
