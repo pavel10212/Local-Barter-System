@@ -20,3 +20,25 @@ This is a bartering app where you can exchange goods and services with others. J
 ![Login Page](/public/login.png)
 
 ![Register Page](/public/register.png)
+
+![Homepage](/public/homepage.png)
+
+![Hoempage dialog](/public/homepagedialog.png)
+
+![My trades page](/public/mytrades.png)
+
+![create listing dialog](/public/createlistingdialog.png)
+
+![my trades dialog public listings](/public/publiclistingsdialog.png)
+
+![my trades dialog my offers](/public/myoffersdialog.png)
+
+![my items page](/public/myitems.png)
+
+![add items dialog](/public/additemsdialog.png)
+
+![profile page](/public/profile.png)
+
+![profile page continued](/public/profilecont.png)
+
+![settings page](/public/settings.png)
