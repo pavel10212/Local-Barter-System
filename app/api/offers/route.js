@@ -8,6 +8,21 @@ export async function POST(req) {
         const user = await auth()
         const {itemId, barterId} = body;
 
+        const offer = await prisma.offer.findFirst({
+            where: {
+                barterId,
+                itemId,
+            }
+        })
+
+        console.log(offer)
+
+        if (offer) {
+            return NextResponse.json(
+                {message: "This item has already been offered!"},
+                {status: 400}
+            );
+        }
 
         const newOffer = await prisma.offer.create({
             data: {

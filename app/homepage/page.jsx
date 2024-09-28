@@ -92,7 +92,10 @@ const Homepage = () => {
                     setOfferItem(null);
                     toast.success("Offer created successfully");
                     handleClose();
+                } else {
+                    toast.error("This item has already been offered!");
                 }
+
             } catch (error) {
                 console.error("Error creating offer:", error);
             }
