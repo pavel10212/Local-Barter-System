@@ -256,7 +256,7 @@ const MyTrades = () => {
                             My Offers
                         </h2>
                         <p className="text-gray-400 mb-4 pb-2 border-b border-gray-700">
-                            Items you offered for other people's items
+                            Items you offered for other people&apos;s items
                         </p>
                         <div className="space-y-4 mt-4">
                             {myOffers.length > 0 ? (

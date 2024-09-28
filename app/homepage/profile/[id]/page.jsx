@@ -122,7 +122,7 @@ const MyProfile = () => {
                     <Card className="bg-gray-800 border-gray-700 shadow-xl col-span-2">
                         <CardHeader className="bg-gradient-to-r from-green-600 to-teal-600 p-6">
                             <CardTitle className="text-2xl font-semibold flex items-center text-white">
-                                <ImageIcon className="mr-2"/> User's Items
+                                <ImageIcon className="mr-2"/> User&apos;s Items
                             </CardTitle>
                             <CardDescription className="text-gray-200">
                                 Items you have listed
@@ -203,10 +203,10 @@ const MyProfile = () => {
                 <Card className="bg-gray-800 border-gray-700 shadow-xl mb-8">
                     <CardHeader className="bg-gradient-to-r from-blue-600 to-indigo-600 p-6">
                         <CardTitle className="text-2xl font-semibold flex items-center text-white">
-                            <List className="mr-2"/> User's Open Listings
+                            <List className="mr-2"/> User&apos;s Open Listings
                         </CardTitle>
                         <CardDescription className="text-gray-200">
-                            User's active barter listings
+                            User&apos;s active barter listings
                         </CardDescription>
                     </CardHeader>
                     <CardContent className="p-6">
