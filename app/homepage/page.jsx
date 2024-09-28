@@ -1,11 +1,12 @@
 "use client";
 
 import {useState, useEffect} from "react";
-
 import BarterCard from "@/components/BarterCard/BarterCard";
 import BarterDialog from "@/components/BarterDialog/BarterDialog";
 import CreateTradeDialog from "@/components/CreateTradeDialog/CreateTradeDialog";
 import LoadingWrapper from "@/components/LoadingWrapper/LoadingWrapper";
+import {useRouter} from "next/navigation";
+import { useSession} from "next-auth/react";
 
 const Homepage = () => {
     const [selectedBarter, setSelectedBarter] = useState(null);
@@ -19,6 +20,8 @@ const Homepage = () => {
     const [barters, setBarters] = useState([]);
     const [offerItem, setOfferItem] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const router = useRouter();
+    const { data: session } = useSession();
 
     useEffect(() => {
         fetchBarters();
@@ -55,6 +58,10 @@ const Homepage = () => {
             setIsLoading(false);
         }
     };
+
+    const handleRerouteClick = () => {
+        router.push(`homepage/my-items/${session.user.id}`)
+    }
 
     const handleBarterClick = (barter) => {
         setSelectedBarter(barter);
@@ -123,6 +130,7 @@ const Homepage = () => {
                     handleClose={handleClose}
                     handleOfferClick={handleOfferClick}
                     items={items}
+                    handleRerouteClick={handleRerouteClick}
                 />
             )}
         </div>
