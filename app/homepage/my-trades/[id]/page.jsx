@@ -1,6 +1,7 @@
 "use client";
 
 import {useEffect, useState} from "react";
+import {useRouter} from "next/navigation";
 import {useSession} from "next-auth/react";
 import TradeDialog from "@/components/my-trades/TradeDialog";
 import TradeItem from "@/components/my-trades/TradeItem";
@@ -24,6 +25,7 @@ const MyTrades = () => {
     });
     const {data: session} = useSession();
     const [isLoading, setIsLoading] = useState(false);
+    const router = useRouter();
 
     useEffect(() => {
         fetchOutgoingBarters();
@@ -147,6 +149,11 @@ const MyTrades = () => {
             console.error("Error deleting listing:", error);
             toast.error("Error deleting listing");
         }
+    };
+
+
+    const handleRerouteClick = () => {
+        router.push(`/homepage/my-items/${session.user.id}`);
     };
 
 
@@ -297,6 +304,7 @@ const MyTrades = () => {
                 handleFormSubmit={handleFormSubmit}
                 items={items}
                 isCreating={isCreating}
+                handleRerouteClick={handleRerouteClick}
             />
         </div>
     );

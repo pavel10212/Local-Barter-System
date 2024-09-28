@@ -8,16 +8,17 @@ import {
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {Textarea} from "@/components/ui/textarea";
-import {FaExchangeAlt} from "react-icons/fa";
+import {FaExchangeAlt, FaPlus} from "react-icons/fa";
 
 const CreateTradeDialog = ({
-                               isCreateDialogOpen,
-                               handleCreateClose,
-                               newTrade,
-                               handleInputChange,
-                               handleFormSubmit,
-                               items,
-                           }) => {
+    isCreateDialogOpen,
+    handleCreateClose,
+    newTrade,
+    handleInputChange,
+    handleFormSubmit,
+    items,
+    handleRerouteClick,
+}) => {
     return (
         <Dialog open={isCreateDialogOpen} onOpenChange={handleCreateClose}>
             <DialogContent className="bg-gray-900 text-white rounded-lg shadow-xl max-w-md w-full mx-auto">
@@ -29,9 +30,19 @@ const CreateTradeDialog = ({
                 </DialogHeader>
                 <form onSubmit={handleFormSubmit} className="space-y-6 mt-4">
                     <div className="space-y-2">
-                        <label htmlFor="item" className="block text-sm font-medium">
-                            Item Offering
-                        </label>
+                        <div className="flex items-center justify-between">
+                            <label htmlFor="item" className="block text-sm font-medium">
+                                Item Offering
+                            </label>
+                            <Button
+                                type="button"
+                                onClick={handleRerouteClick}
+                                className="bg-black text-white hover:bg-white hover:text-black text-xs py-1 px-2 w-20 rounded-full transition duration-300 flex items-center"
+                            >
+                                <FaPlus className="mr-1" size={10} />
+                                Add
+                            </Button>
+                        </div>
                         <select
                             id="item"
                             name="itemId"
@@ -82,18 +93,18 @@ const CreateTradeDialog = ({
                             />
                         </div>
                     </div>
-                    <DialogFooter className="sm:justify-end">
+                    <DialogFooter className="sm:justify-end space-x-2">
                         <Button
                             type="button"
                             variant="outline"
                             onClick={handleCreateClose}
-                            className="bg-gray-700 text-white py-2 px-4 rounded-md hover:bg-gray-600 transition duration-300"
+                            className="bg-gray-700 text-white py-2 px-4 rounded-md hover:bg-gray-600 transition duration-300 border border-gray-600"
                         >
                             Cancel
                         </Button>
                         <Button
                             type="submit"
-                            className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-500 transition duration-300"
+                            className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300 font-semibold"
                         >
                             Create Trade
                         </Button>
