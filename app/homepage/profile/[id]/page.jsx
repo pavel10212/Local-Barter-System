@@ -60,7 +60,7 @@ const MyProfile = () => {
     const fetchOpenBarters = async (userId) => {
         setIsLoading(true);
         try {
-            const response = await fetch(`/api/incoming-bartersById?userId=${userId}&status=open`);
+            const response = await fetch(`/api/incoming-bartersById?userId=${userId}`);
             if (!response.ok) throw new Error("Failed to fetch open barters");
             const data = await response.json();
             setOpenBarters(data);
@@ -74,7 +74,7 @@ const MyProfile = () => {
     const fetchClosedBarters = async (userId) => {
         setIsLoading(true);
         try {
-            const response = await fetch(`/api/closed-bartersById?userId=${userId}&status=CLOSED`);
+            const response = await fetch(`/api/closed-bartersById?userId=${userId}`);
             if (!response.ok) throw new Error("Failed to fetch closed barters");
             const data = await response.json();
             setClosedBarters(data);

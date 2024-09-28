@@ -114,20 +114,24 @@ const TradeDialog = ({
                                             <h3 className="font-semibold text-lg text-gray-200">{offer.item?.name}</h3>
                                             <p className="text-sm text-gray-400">{offer.item?.description}</p>
                                             <div className="flex gap-4">
-                                                <Button
-                                                    onClick={() => handleAccept(offer.offerId)}
-                                                    className="bg-green-600 hover:bg-green-700 text-white flex-1 transition-colors"
-                                                >
-                                                    <Check className="w-4 h-4 mr-2"/>
-                                                    Accept
-                                                </Button>
-                                                <Button
-                                                    onClick={() => handleDecline(offer.offerId)}
-                                                    className="bg-red-600 hover:bg-red-700 text-white flex-1 transition-colors"
-                                                >
-                                                    <X className="w-4 h-4 mr-2"/>
-                                                    Decline
-                                                </Button>
+                                                {offer.status === "OPEN" && (
+                                                    <>
+                                                        <Button
+                                                            onClick={() => handleAccept(offer.offerId)}
+                                                            className="bg-green-600 hover:bg-green-700 text-white flex-1 transition-colors"
+                                                        >
+                                                            <Check className="w-4 h-4 mr-2"/>
+                                                            Accept
+                                                        </Button>
+                                                        <Button
+                                                            onClick={() => handleDecline(offer.offerId)}
+                                                            className="bg-red-600 hover:bg-red-700 text-white flex-1 transition-colors"
+                                                        >
+                                                            <X className="w-4 h-4 mr-2"/>
+                                                            Decline
+                                                        </Button>
+                                                    </>
+                                                )}
                                             </div>
                                         </div>
                                     </div>

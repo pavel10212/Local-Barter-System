@@ -17,7 +17,7 @@ export async function POST(req) {
         barterStatus = "CLOSED";
     } else if (action === "decline") {
         offerStatus = "DECLINED";
-        barterStatus = "DECLINED";
+        barterStatus = "OPEN";
     } else {
         return NextResponse.json({error: "Invalid action"}, {status: 400});
     }

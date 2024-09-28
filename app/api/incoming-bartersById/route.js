@@ -1,25 +1,14 @@
 import prisma from "@/lib/prisma";
-import { NextResponse } from "next/server";
+import {NextResponse} from "next/server";
 
 export async function GET(request) {
-    const { searchParams } = new URL(request.url);
+    const {searchParams} = new URL(request.url);
     const userId = searchParams.get('userId');
-    const status = searchParams.get('status');
 
-    let statusCondition = {};
-    if (status === 'open') {
-        statusCondition = {
-            status: {
-                in: ['open', 'offer-received']
-            }
-        };
-    }
-
-    // Fetch barters for the specified userId
     const incomingBartersById = await prisma.barter.findMany({
         where: {
             userId: userId,
-            ...statusCondition
+            status: "OPEN"
         },
         include: {
             barterOwner: true,

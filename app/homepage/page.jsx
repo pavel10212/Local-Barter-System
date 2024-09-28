@@ -3,25 +3,19 @@
 import {useState, useEffect} from "react";
 import BarterCard from "@/components/BarterCard/BarterCard";
 import BarterDialog from "@/components/BarterDialog/BarterDialog";
-import CreateTradeDialog from "@/components/CreateTradeDialog/CreateTradeDialog";
 import LoadingWrapper from "@/components/LoadingWrapper/LoadingWrapper";
 import {useRouter} from "next/navigation";
-import { useSession} from "next-auth/react";
+import {useSession} from "next-auth/react";
+import {toast} from "sonner"
 
 const Homepage = () => {
     const [selectedBarter, setSelectedBarter] = useState(null);
     const [items, setItems] = useState([]);
-    const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
-    const [newTrade, setNewTrade] = useState({
-        itemId: "",
-        itemSeeking: "",
-        description: "",
-    });
     const [barters, setBarters] = useState([]);
     const [offerItem, setOfferItem] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
-    const { data: session } = useSession();
+    const {data: session} = useSession();
 
     useEffect(() => {
         fetchBarters();
@@ -96,6 +90,7 @@ const Homepage = () => {
                         })
                     );
                     setOfferItem(null);
+                    toast.success("Offer created successfully");
                     handleClose();
                 }
             } catch (error) {
@@ -104,7 +99,7 @@ const Homepage = () => {
         }
     };
 
-    if (isLoading) return <LoadingWrapper />
+    if (isLoading) return <LoadingWrapper/>
 
     return (
         <div className="bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen text-white">

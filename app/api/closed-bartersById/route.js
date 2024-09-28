@@ -4,21 +4,12 @@ import { NextResponse } from "next/server";
 export async function GET(request) {
     const { searchParams } = new URL(request.url);
     const userId = searchParams.get('userId');
-    const status = searchParams.get('status');
 
-    let statusCondition = {};
-    if (status === 'CLOSED') {
-        statusCondition = {
-            status: {
-                in: ['CLOSED']
-            }
-        };
-    }
 
     const closeBartersById = await prisma.barter.findMany({
         where: {
             userId: userId,
-            ...statusCondition
+            status: "CLOSED"
         },
         include: {
             barterOwner: true,

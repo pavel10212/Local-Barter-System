@@ -32,15 +32,6 @@ export async function POST(req) {
                 offerCreator: true,
             }
         })
-
-        await prisma.barter.update({
-            where: {
-                barterId
-            },
-            data: {
-                status: "offer-received"
-            }
-        })
         return NextResponse.json(newOffer);
     } catch (error) {
         console.error("Error creating offer:", error);

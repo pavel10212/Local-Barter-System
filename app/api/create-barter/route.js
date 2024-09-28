@@ -19,7 +19,7 @@ export async function POST(req) {
                         userId
                     }
                 },
-                status: "open",
+                status: "OPEN",
                 item: {
                     connect: {
                         itemId
