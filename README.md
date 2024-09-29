@@ -41,7 +41,7 @@ Join our community to start trading items and services without the need for mone
 ### Landing Page
 ![Landing Page](/public/landingpage.png)
 
-The landing page welcomes users to the Local Barter System. It provides an overview of the platform's purpose and encourages visitors to join the community for trading goods and services without money.
+The landing page welcomes users to the Local Barter System. It provides an overview of the platform's purpose and encourages visitors to join the community to trade goods and services without money.
 
 ### Login Page
 ![Login Page](/public/login.png)
@@ -61,47 +61,47 @@ The homepage serves as the central hub for users, showcasing available trades an
 ### Homepage Dialog
 ![Homepage Dialog](/public/homepagedialog.png)
 
-This dialog on the homepage offers additional information or actions related to a specific trade or service. It enhances user interaction by providing more context such as a drop down of your items to offer for trade, if you don't have an item you can click "+Add" and it'll redirect you to "My Items" Page.
+This dialog on the homepage offers additional information or actions related to a specific trade or service. It enhances user interaction by providing more context such as a drop-down of your items to offer for trade, if you don't have an item you can click "+Add" and it'll redirect you to the "My Items" Page.
 
 ### My Trades Page
 ![My Trades Page](/public/mytrades.png)
 
-The "My Trades" page displays a user's current Public Listings and current Offers. It helps users keep track of their exchanges and manage ongoing transactions efficiently. 
+The "My Trades" page displays a user's current Public Listings and current offers. It helps users keep track of their exchanges and manage ongoing transactions efficiently. 
 
 ### Create Listing Dialog
 ![Create Listing Dialog](/public/createlistingdialog.png)
 
-Users can create new listings for items or services they wish to trade using this dialog. It includes fields for item offering, seeking item, and description, making it easy to add new offers. There's a button "+Add" so you can quickly be redirected to add new item.
+Users can create new listings for items or services they wish to trade using this dialog. It includes fields for item offerings, seeking items, and descriptions, making it easy to add new offers. There's a button "+Add" so you can quickly be redirected to add a new item.
 
 ### My Trades Dialog - Public Listings
 ![My Trades Dialog - Public Listings](/public/publiclistingsdialog.png)
 
-This dialog shows public listings available for trade. Users can browse through these listings to find items or services they are interested in exchanging. User can manage their offers for their Public Listings by choosing to "Accept" or "Decline" offers, if user accepted the barter status is changed to "CLOSED" and if the user decline the barter status remains "OPEN" If wanted, the user can also delete the listing.
+This dialog shows public listings available for trade. Users can browse through these listings to find items or services they are interested in exchanging. Users can manage their offers for their Public Listings by choosing to "Accept" or "Decline" offers, if a user accepts the barter, the barter status is changed to "CLOSED" and if the user declines the barter status remains "OPEN". If wanted, the user can also delete the listing.
 
 ### My Trades Dialog - My Offers
 ![My Trades Dialog - My Offers](/public/myoffersdialog.png)
 
-The "My Offers" dialog displays offers made by the user. It allows users to review and manage their proposals to other community members. User can also delete their offer if needed to.
+The "My Offers" dialog displays offers made by the user. It allows users to review and manage their proposals with other community members. User can also delete their offer if needed.
 
 ### My Items Page
 ![My Items Page](/public/myitems.png)
 
-The "My Items" page lists all items a user has available for trade. It provides the user the ability to click on any items to be able to bring up a dialog so they can modify their item, helping users maintain an up to date inventory.
+The "My Items" page lists all items a user has available for trade. It provides the user the ability to click on any items to be able to bring up a dialog so they can modify their item, helping users maintain an up-to-date inventory.
 
 ### Edit My Items 
-![Edit My Items Page](/public/editmyitems.png)
+![Edit My Items Page](/public/editmyitem.png)
 
-Users can modify details of their listed items on the "Edit My Items" dialog. This feature includes changing the item name, description, and image. Users can also delete items here.
+Users can modify the details of their listed items on the "Edit My Items" dialog. This feature includes changing the item name, description, and image. Users can also delete items here.
 
 ### Add Items Dialog
 ![Add Items Dialog](/public/additemsdialog.png)
 
-The "Add Items" dialog allows users to quickly add new items to their inventory. It includes fields for item name, description, and images, streamlining the listing process.
+The "Add Items" dialog allows users to quickly add new items to their inventory. It includes fields for item names, descriptions, and images, streamlining the listing process.
 
 ### Profile Page
 ![Profile Page](/public/profile.png)
 
-The profile page displays user information and activity. It includes sections for user details, User's items, and trade history.
+The profile page displays user information and activity. It includes sections for user details, User items, and trade history.
 
 ### Profile Page Continued
 ![Profile Page Continued](/public/profilecont.png)
