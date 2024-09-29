@@ -31,7 +31,13 @@ const BarterDialog = ({
                 </DialogHeader>
                 <div className="space-y-6">
                     <div className="flex items-center space-x-3 text-gray-300">
-                        <FaUserCircle className="text-xl"/>
+                        <Image
+                            src={selectedBarter.barterOwner.profilePictureUrl || "/favicon.ico"}
+                            width={40}
+                            height={40}
+                            alt="User Image"
+                            className="rounded-full h-10 w-10"
+                        />
                         <Link
                             href={`/homepage/profile/${selectedBarter.barterOwner.userId}`}
                             className="hover:text-blue-400 transition"

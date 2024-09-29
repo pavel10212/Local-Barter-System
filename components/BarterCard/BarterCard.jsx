@@ -41,6 +41,14 @@ const BarterCard = ({barter, onClick}) => (
                         <span>{barter.barterOwner.address}</span>
                     </div>
                 )}
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                        <span className="text-gray-400 text-sm mr-2">Owner:</span>
+                        <span className="text-white font-semibold text-sm">
+                {barter?.barterOwner?.firstName} {barter?.barterOwner?.lastName}
+                        </span>
+                    </div>
+                </div>
             </div>
         </CardContent>
     </Card>

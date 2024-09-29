@@ -34,6 +34,16 @@ export async function POST(req) {
             data: {status: barterStatus}
         });
 
+        if (action === "accept") {
+            await prisma.offer.updateMany({
+                where: {
+                    barterId: offer.barterId,
+                    offerId: {not: offerId}
+                },
+                data: {status: "DECLINED"}
+            });
+        }
+
         return NextResponse.json({message: `Barter ${action}ed successfully`});
     } catch (error) {
         console.error(`Error ${action}ing barter:`, error);

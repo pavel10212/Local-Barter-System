@@ -114,7 +114,7 @@ const TradeDialog = ({
                                             <h3 className="font-semibold text-lg text-gray-200">{offer.item?.name}</h3>
                                             <p className="text-sm text-gray-400">{offer.item?.description}</p>
                                             <div className="flex gap-4">
-                                                {offer.status === "PENDING" && (
+                                                {offer.status === "PENDING" && trade.status === "OPEN" && (
                                                     <>
                                                         <Button
                                                             onClick={() => handleAccept(offer.offerId)}
