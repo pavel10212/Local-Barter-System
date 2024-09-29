@@ -149,17 +149,13 @@ const MyProfile = () => {
                                         <CardContent className="p-4">
                                             <div
                                                 className="h-40 bg-gray-600 flex items-center justify-center mb-4 rounded-md overflow-hidden">
-                                                {item.image ? (
                                                     <Image
                                                         width={400}
                                                         height={400}
-                                                        src={item.image}
+                                                        src={item.image || "/favicon.ico"}
                                                         alt={item.name}
                                                         className="h-full w-full object-cover"
                                                     />
-                                                ) : (
-                                                    <ImageIcon className="w-12 h-12 text-gray-400"/>
-                                                )}
                                             </div>
                                             <div className="flex items-center text-gray-300 text-sm">
                                                 <Tag className="w-4 h-4 mr-2"/>
